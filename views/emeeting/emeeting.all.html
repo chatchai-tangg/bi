@@ -1,0 +1,39 @@
+<div layout="row" layout-wrap layout-padding>
+    <div ng-repeat="x in [{}, {}, {}, {}]" flex="50">
+
+        <md-card>
+            <md-card-header>
+                <md-card-avatar>
+                    <md-icon>event</md-icon>
+                </md-card-avatar>
+                <md-card-header-text>
+                    <span class="md-title">Title</span>
+                    <span class="md-subhead">subhead</span>
+                </md-card-header-text>
+            </md-card-header>
+            <md-card-content>
+                <p>
+                    <md-icon class="icon-inline">room</md-icon>
+                    ภาษาไทย
+                </p>
+                <p>
+                    <md-icon class="icon-inline">person</md-icon>
+                    ภาษาไทย
+                </p>
+                <p>
+                    <md-icon class="icon-inline">alarm</md-icon>
+                    ภาษาไทย
+                </p>
+                <h4 style="margin-bottom:0">
+                    วาระการประชุม
+                    <md-button ng-click="x.toggle=!x.toggle" class="md-icon-button">
+                        <md-icon ng-hide="x.toggle">expand_more</md-icon>
+                        <md-icon ng-show="x.toggle">expand_less</md-icon>
+                    </md-button>
+                </h4>
+                <p ng-show="x.toggle" class="nga-fade">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            </md-card-content>
+        </md-card>
+
+    </div>
+</div>
