@@ -1,0 +1,278 @@
+﻿
+[2]
+รายชื่ออาจารย์ สายวิชาการ แยกตามตำแหน่ง ที่ปฏิบัติงานอยู่
+SELECT id_card, name_th, el_name
+  FROM [rmutp].[dbo].[View_Employee_type_Detail]
+  where es_code ='01' and  el_code in ('201','115','202','114','203','113','204','112') 
+  
+  order by el_name
+
+จำนวนอาจารย์ สายวิชาการ แยกตามตำแหน่ง  ที่ปฏิบัติงานอยู่ปัจจุบัน
+SELECT count(id_card) as expert_num, el_name
+  FROM [rmutp].[dbo].[View_Employee_type_Detail]
+  where es_code ='01' and  el_code in ('201','115','202','114','203','113','204','112') 
+  group by el_name
+  order by el_name 
+
+-------------------------------
+[3]
+รายชื่อบุคลากรสายสนับสนุน แยกตาม ปฏิบัติการ, ชำนาญการ, ชำนาญการพิเศษ
+SELECT SELECT TOP (1000) [name_th]
+      ,[id_card]
+      ,[ec_code]
+      ,[employee_code]
+      ,[es_code]
+      ,[pos_code]
+      ,[et_code]
+      ,[et_name]
+      ,[el_code]
+      ,[el_name]
+  FROM [rmutp].[dbo].[View_Employee_type_Detail]
+  where es_code ='01' and el_code in ('120','121','205','208','209','206')
+  order by el_name
+
+จำนวน บุคลากรสายสนับสนุน แยกตาม ปฏิบัติการ, ชำนาญการ, ชำนาญการพิเศษ
+SELECT count(id_card) as expert_num, el_name
+  FROM [rmutp].[dbo].[View_Employee_type_Detail]
+  where es_code ='01' and el_code in ('120','121','205','208','209','206')
+  group by el_name
+  order by el_name 
+
+-----------------------------------------------------
+[5]
+จำนวนสายวิชาการที่สำเร็จการศึกษาสูงสุด (วุฒิการศึกษา)
+SELECT count (id_card) AS degreeNum,dl_code,dl_name_th
+  FROM [rmutp].[dbo].[View_Degree]
+
+  WHERE pos_name_th  in ('อาจารย์','ผู้ช่วยศาสตราจารย์','รองศาสตราจารย์','อาจารย์ชาวต่างประเทศ')
+
+  GROUP BY dl_code,dl_name_th
+
+  ORDER BY dl_name_th
+
+------------------------------
+[6]
+จำนวนสายสนับสนุนที่สำเร็จการศึกษาสูงสุด (วุฒิการศึกษา)
+SELECT count (id_card) AS degreeNum,dl_code,dl_name_th
+  FROM [rmutp].[dbo].[View_Degree]
+
+  WHERE pos_name_th not in ('อาจารย์','ผู้ช่วยศาสตราจารย์','รองศาสตราจารย์','อาจารย์ชาวต่างประเทศ')
+
+  GROUP BY dl_code,dl_name_th
+-------------------------------
+
+[7.2]
+จำนวนผู้บริหารแบบแต่งตั้ง (ขาดข้อมูลหัวหน้างานในสายสนับสนุน)
+SELECT 	COUNT (employee_management.id_card) as manager
+    	,CONVERT(char(4), approve_date, 112) as year 
+      
+  FROM [employee_management]
+  INNER JOIN employee ON employee_management.id_card=employee.id_card
+  INNER JOIN zdept on employee.dept_code=zdept.dept_code 
+  INNER JOIN zposition_manager on zposition_manager.pm_code=employee_management.pm_code
+
+  WHERE
+
+  employee_management.pm_code NOT IN ('01','05', '07','08','10','11','12','21') 
+  and employee_management.dept_code NOT IN ('15','16','17','18','19')
+  
+  and current_status = 'Y'
+  and CONVERT(char(4), approve_date, 112) != ''
+
+  GROUP BY CONVERT(char(4), approve_date, 112)
+
+  ORDER BY  CONVERT(char(4), approve_date, 112) desc
+
+-------------------------------------------
+[7.2]
+รายชื่อผู้บริหารที่ได้มาจากการแต่งตั้ง แยกตามปี (ไม่มีข้อมูลหัวหน้างานในสายสนับสนุน)
+SELECT 	employee_management.emanagement_id,employee.name_th
+      	,employee_management.pm_code
+	,zposition_manager.pm_name
+      	,employee_management.id_card
+      	,employee_management.current_status
+      	,employee_management.dept_code
+	,zdept.dept_name_th
+	,CONVERT(char(4), approve_date, 112) as year 
+      
+  FROM [employee_management]
+  INNER JOIN employee ON employee_management.id_card=employee.id_card
+  inner join zdept on employee.dept_code=zdept.dept_code 
+  inner join zposition_manager on zposition_manager.pm_code=employee_management.pm_code
+
+  WHERE
+
+  employee_management.pm_code NOT IN ('01','05', '07','08','10','11','12','21') 
+  and employee_management.dept_code NOT IN ('15','16','17','18','19')
+  
+  and current_status = 'Y'
+  and CONVERT(char(4), approve_date, 112) != ''
+
+  ORDER BY  CONVERT(char(4), approve_date, 112) desc, pm_code
+----------------------------
+[7.1]
+รายชื่อผู้บริหารที่ได้รับการสรรหา แยกตามปี
+SELECT 	employee_management.emanagement_id,employee.name_th
+      	,employee_management.pm_code
+	,zposition_manager.pm_name
+      	,employee_management.id_card
+      	,employee_management.current_status
+      	,employee_management.dept_code
+	,zdept.dept_name_th
+	,CONVERT(char(4), approve_date, 112) as year 
+      
+  FROM [employee_management]
+  INNER JOIN employee ON employee_management.id_card=employee.id_card
+  inner join zdept on employee.dept_code=zdept.dept_code 
+  inner join zposition_manager on zposition_manager.pm_code=employee_management.pm_code
+
+  WHERE
+
+   employee_management.pm_code IN ('01','05', '07','08','10','11','12') AND employee_management.dept_code NOT IN ('23','14','21') AND  current_status = 'Y' AND CONVERT(char(4), approve_date, 112) != ''OR
+   employee_management.dept_code IN ('15','16','17','18','19','21') AND employee_management.dept_code NOT IN ('23','14','21') and current_status = 'Y' AND  CONVERT(char(4), approve_date, 112) != ''
+   
+  ORDER BY CONVERT(char(4), approve_date, 112) desc
+
+---------------------------------
+[8]
+รายชื่อคนเริ่มปฏิบัติงาน แยกตามปี แยกตามหน่วยงาน และประเภทบุคลากร 
+(ไม่นับลูกจ้างที่มาสมัครแล้วลาออกสมัครใหม่เป็นพนักงาน--นับไม่ได้--ไม่มีข้อมูลการสมัครของลูกจ้างเดิม มีแต่ข้อมูลการสมัครเป็นพนักงาน)
+
+SELECT employee.id_card,employee.name_th,employee.surname_th,employee.dept_code,zdept.dept_name_th,
+		CONVERT(char(4), gov_date, 112) as start,CONVERT(char(4), end_date, 112) as stop,
+		zposition.pos_line
+
+FROM [rmutp].[dbo].[employee_detail]
+  inner join employee on employee.id_card = employee_detail.id_card
+  inner join zposition on employee.pos_code = zposition.pos_code
+  inner join zdept on employee.dept_code=zdept.dept_code
+
+WHERE CONVERT(char(4), gov_date, 112) >= 2007
+ 
+ORDER BY CONVERT(char(4), gov_date, 112) desc, dept_code 
+
+-----------------------------------
+[8.1]
+จำนวนคนเริ่มปฏิบัติงาน (ผู้สมัครเข้าทำงาน) แยกตามหน่วยงาน ย้อนหลังถึงปี 2562-2550
+SELECT COUNT(employee.id_card) as total_start, zdept.dept_name_th	  
+
+FROM [rmutp].[dbo].[employee_detail]
+  inner join employee on employee.id_card = employee_detail.id_card
+  inner join zposition on employee.pos_code = zposition.pos_code
+  inner join zdept on employee.dept_code=zdept.dept_code
+
+WHERE   CONVERT(char(4), gov_date, 112) >= 2015
+
+GROUP BY zdept.dept_name_th
+-----------------------------
+[8.2]
+จำนวนคนเริ่มปฏิบัติงาน (ผู้สมัครเข้าทำงาน) แยกตามประเภทบุคลากร (สายวิชาการ-สายสนับสนุน) ย้อนหลังถึงปี 2562-2550
+SELECT COUNT(employee.id_card) as total_start, zposition.pos_line	  
+
+FROM [rmutp].[dbo].[employee_detail]
+  inner join employee on employee.id_card = employee_detail.id_card
+  inner join zposition on employee.pos_code = zposition.pos_code
+  inner join zdept on employee.dept_code=zdept.dept_code
+
+WHERE   CONVERT(char(4), gov_date, 112) >= 2007
+
+GROUP BY zposition.pos_line
+--------------------------------------
+[9.1]
+รายชื่อผู้เกษียณ  จำแนกตามตำแหน่งวิชาการ
+SELECT id_card,name_th,surname_th,es_code,zposition.pos_name_th
+  FROM [rmutp].[dbo].[employee]
+  inner join zposition on zposition.pos_code =employee.pos_code
+  where
+     employee.pos_code in ('052', '069','076') 
+     and es_code in ('05','06','08')
+ ORDER by pos_name_th
+
+จำนวนผู้เกษียณ  จำแนกตามตำแหน่งวิชาการ
+SELECT count(id_card) as reitre_teacher,zposition.pos_name_th
+  FROM [rmutp].[dbo].[employee]
+  inner join zposition on zposition.pos_code=employee.pos_code
+  where
+     employee.pos_code in ('052','069','076') 
+     and es_code in ('05','06','08')
+
+  GROUP BY pos_name_th
+  ORDER BY by pos_name_th
+
+--------------------------------------------------
+[9.2]
+รายชื่อผู้เกษียณ  จำแนกตามประเภทบุคลากร สายวิชาการ และสายสนับสนุน
+SELECT id_card,name_th,surname_th,es_code,zposition.pos_line
+  FROM [rmutp].[dbo].[employee]
+  inner join zposition on zposition.pos_code =employee.pos_code
+  where es_code in ('05','06','08')
+  order by pos_line
+
+จำนวน ผู้เกษียณ จำแนกตามประเภทบุคลากร สายวิชาการ และสายสนับสนุน
+SELECT count(id_card) as retire_num,zposition.pos_line
+  FROM [rmutp].[dbo].[employee]
+  inner join zposition on zposition.pos_code =employee.pos_code
+  where es_code in ('05','06','08')
+  group by pos_line
+  order by pos_line
+
+รายชื่อคนเกษียณ (แยกรายปี)**** ทำได้ไปข้างหน้า ย้อนหลัง (ข้อมูล กบ.ผิดบางส่วน--คนลาออกก่อนเกษียณไม่มีปีที่ลาออก)
+SELECT View_Count_Retire.id_card,name_th,surname_th, dept_name_th, CONVERT(char(4), end_date, 112) as end_date,
+(CASE WHEN 
+		abs(LEFT(CONVERT(varchar, bd, 101), 2)) > 9 
+	THEN 
+		abs(LEFT(CONVERT(varchar, bd, 102), 4)) + 61 + 543 
+	ELSE 
+		abs(LEFT(CONVERT(varchar, bd, 102), 4)) + 60 + 543 
+	END) AS retireYear, 
+
+(CASE WHEN 
+	pos_code = '052' OR
+    pos_code = '069' OR
+    pos_code = '076' OR
+    pos_code = '077' OR
+    pos_code = '181' OR
+    pos_code = '188'
+	THEN 'สายวิชาการ' 
+	ELSE 'สายสนับสนุน' 
+	END) AS groupposition
+
+FROM  dbo.View_Count_Retire
+inner join employee_detail on employee_detail.id_card=dbo.View_Count_Retire.id_card
+
+order by retireYear
+
+-------------------------------------
+
+[10]
+จำนวนคนลาออกจากการปฏิบัติงาน แยกตามหน่วยงาน และประเภทบุคลากร (รวมคนเกษียณ) ย้อนหลังถึงปี 2562-2550
+
+SELECT count(employee_detail.id_card) as stop_work_num, zdept.dept_name_th
+  FROM [rmutp].[dbo].[employee]
+  inner join zposition on employee.pos_code=zposition.pos_code
+  inner join employee_detail on employee_detail.id_card = employee.id_card
+  inner join zdept on employee.dept_code=zdept.dept_code
+  
+  WHERE   CONVERT(char(4),end_date, 112) >= 2007
+
+  group by zdept.dept_name_th
+-------------------------
+[10]
+รายชื่อคนลาออก (ไม่รวมเกษียณ)
+SELECT employee_detail.id_card,employee.name_th, zdept.dept_name_th,CONVERT(char(4),end_date, 112) as end_year
+  FROM [rmutp].[dbo].[employee]
+  left join zposition on employee.pos_code=zposition.pos_code
+  left join employee_detail on employee_detail.id_card = employee.id_card
+  left join zdept on employee.dept_code=zdept.dept_code
+  
+  WHERE employee.es_code='02' 
+
+--------------------------------
+
+ค้นหา field ในตาราง
+select 
+     o.name as [Table], c.name as [Column]
+     from sys.columns            c
+         inner join sys.objects  o on c.object_id=o.object_id
+     where c.name = 'el_code'
+     order by o.name,c.name
