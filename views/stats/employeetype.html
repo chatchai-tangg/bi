@@ -1,9 +1,9 @@
 <div layout="row" layout-wrap layout-padding>
-    <div flex="100" flex-gt-sm="50">
+    <div flex="100">
         <md-card>
             <md-card-title>
                 <md-card-title-text>
-                    <span class="md-headline">Action buttons</span>
+                    <span class="md-headline">ประเภทบุคลากร</span>
                 </md-card-title-text>
             </md-card-title>
             <md-card-content>
@@ -12,7 +12,7 @@
         </md-card>
     </div>
 
-    <div flex="100" flex-gt-sm="50">
+    <!-- <div flex="100" flex-gt-md="50">
         <md-card>
             <md-card-title>
                 <md-card-title-text>
@@ -20,15 +20,51 @@
                 </md-card-title-text>
             </md-card-title>
             <md-card-content>
-                <!-- <canvas id="chartsempeducation"></canvas> -->
+                <canvas id="chartsempeducation"></canvas>
+            </md-card-content>
+        </md-card>
+    </div> -->
 
+    <div flex="100" flex-gt-md="50">
+        <md-card>
+            <md-card-title>
+                <md-card-title-text>
+                    <span class="md-headline">บุคลากรจำแนกตามวุฒิการศึกษา (วิชาการ)</span>
+                </md-card-title-text>
+            </md-card-title>
+            <md-card-content>
+                <canvas id="chartacademicEmployeeEducation"></canvas>
+            </md-card-content>
+        </md-card>
+    </div>
+
+    <div flex="100" flex-gt-md="50">
+        <md-card>
+            <md-card-title>
+                <md-card-title-text>
+                    <span class="md-headline">บุคลากรจำแนกตามวุฒิการศึกษา (สนับสนุน)</span>
+                </md-card-title-text>
+            </md-card-title>
+            <md-card-content>
+                <canvas id="chartacademicEmployeeSupport"></canvas>
+            </md-card-content>
+        </md-card>
+    </div>
+
+    <div flex="100" flex-gt-md="50">
+        <md-card>
+            <md-card-title>
+                <md-card-title-text>
+                    <span class="md-headline">จำนวนคนเริ่มปฏิบัติงาน (ผู้สมัครเข้าทำงาน) แยกตามหน่วยงาน</span>
+                </md-card-title-text>
+            </md-card-title>
+            <md-card-content>
+                <canvas id="chartstartworkdistyeardepartline"></canvas>
             </md-card-content>
         </md-card>
     </div>
 
 </div>
 
-
-<div id="chartContainer" style="height: 370px; width: 50%; margin-left:auto;margin-right:auto;"></div>
 
 <div ui-view class="nga-fade"></div>

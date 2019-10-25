@@ -7,7 +7,7 @@ angular.module('app')
         $scope.datachartsEmpedu = [];
         $scope.menu = [];
 
-
+        // GETDATA
         $scope.getdataemptype = function () {
             $http({
                 url: 'http://app.rmutp.ac.th/api/bi/hrm/Employeetype',
@@ -45,6 +45,63 @@ angular.module('app')
                 }
             )
         }
+
+        $scope.getacademicEmployeeEducation = function () {
+            $http({
+                url: 'http://app.rmutp.ac.th/api/bi/hrm/academicEmployeeEducation',
+                method: 'GET',
+            }).then(
+                function (res) {
+                    $scope.datachartsEmpedu = res.data;
+                    $scope.dlname = res.data.map(res => res.dl_name_th);
+                    $scope.degreetotals = res.data.map(res => res.degreeNum);
+                    console.log($scope.dlname);
+                    console.log($scope.degreetotals);
+                    $scope.chartacademicEmployeeEducation();
+                },
+                function (error) {
+                    console.log(error);
+                }
+            )
+        }
+
+        $scope.getacademicEmployeeSupport = function () {
+            $http({
+                url: 'http://app.rmutp.ac.th/api/bi/hrm/academicEmployeeSupport',
+                method: 'GET',
+            }).then(
+                function (res) {
+                    $scope.datachartsEmpedu = res.data;
+                    $scope.dlname = res.data.map(res => res.dl_name_th);
+                    $scope.degreetotals = res.data.map(res => res.degreeclass);
+                    $scope.chartademicEmployeeSupport();
+                },
+                function (error) {
+                    console.log(error);
+                }
+            )
+        }
+
+        $scope.getstartworkdistyeardepartline = function () {
+            $http({
+                url: 'http://app.rmutp.ac.th/api/bi/hrm/startworkdistyeardepartline',
+                method: 'GET',
+            }).then(
+                function (res) {
+                    $scope.datachartsEmpedu = res.data;
+                    $scope.deptname = res.data.map(res => res.dept_name_th);
+                    $scope.totals = res.data.map(res => res.total);
+                    $scope.chartstartworkdistyeardepartline();
+                },
+                function (error) {
+                    console.log(error);
+                }
+            )
+        }
+
+
+
+        // PLOTCHARTS
 
         $scope.chartsemptype = function () {
             new Chart(document.getElementById("chartsemptype"), {
@@ -102,65 +159,77 @@ angular.module('app')
             });
         }
 
-        $scope.testt = function () {
-            let chart = new CanvasJS.Chart("chartContainer", {
-
-                animationEnabled: true,
-                axisY: {
-                    valueFormatString: " ",
-                    tickLength: 0
+        $scope.chartacademicEmployeeEducation = function () {
+            new Chart(document.getElementById("chartacademicEmployeeEducation"), {
+                type: 'bar',
+                data: {
+                    labels: $scope.dlname,
+                    datasets: [{
+                        label: "บุคลากรแบ่งแยกตามประเภท",
+                        backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                        data: $scope.degreetotals
+                    }]
                 },
-                axisX: {
-                    valueFormatString: " ",
-                    tickLength: 0
-                },
-                title: {
-                    text: "Monthly Expense"
-                },
-
-                data: [{
-                    type: "pie",
-                    showInLegend: true,
-                    toolTipContent: "<b>{name}</b>: ${y} (#percent%)",
-                    indexLabel: "{name} - #percent%",
-                    dataPoints: [{
-                            y: 450,
-                            name: "Food"
-                        },
-                        {
-                            y: 120,
-                            name: "Insurance"
-                        },
-                        {
-                            y: 300,
-                            name: "Traveling"
-                        },
-                        {
-                            y: 800,
-                            name: "Housing"
-                        },
-                        {
-                            y: 150,
-                            name: "Education"
-                        },
-                        {
-                            y: 150,
-                            name: "Shopping"
-                        },
-                        {
-                            y: 250,
-                            name: "Others"
-                        }
-                    ]
-                }]
+                options: {
+                    legend: {
+                        display: true
+                    },
+                    title: {
+                        display: false,
+                        text: 'บุคลากรแบ่งแยกตามประเภท'
+                    }
+                }
             });
-
-            chart.render();
         }
 
+        $scope.chartademicEmployeeSupport = function () {
+            new Chart(document.getElementById("chartacademicEmployeeSupport"), {
+                type: 'bar',
+                data: {
+                    labels: $scope.dlname,
+                    datasets: [{
+                        label: "บุคลากรแบ่งแยกตามประเภท",
+                        backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                        data: $scope.degreetotals
+                    }]
+                },
+                options: {
+                    legend: {
+                        display: true
+                    },
+                    title: {
+                        display: false,
+                        text: 'บุคลากรแบ่งแยกตามประเภท'
+                    }
+                }
+            });
+        }
+
+        $scope.chartstartworkdistyeardepartline = function () {
+            new Chart(document.getElementById("chartstartworkdistyeardepartline"), {
+                type: 'bar',
+                data: {
+                    labels: $scope.deptname,
+                    datasets: [{
+                        label: "บุคลากรแบ่งแยกตามประเภท",
+                        backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                        data: $scope.totals
+                    }]
+                },
+                options: {
+                    legend: {
+                        display: true
+                    }
+                }
+            });
+        }
+
+        //EXECUTE
         $scope.getdataemptype();
-        // $scope.getdataempeducation();
-        $scope.testt();
+        $scope.getdataempeducation();
+        $scope.getacademicEmployeeEducation();
+        $scope.getacademicEmployeeSupport();
+        $scope.getstartworkdistyeardepartline();
 
 
     })
