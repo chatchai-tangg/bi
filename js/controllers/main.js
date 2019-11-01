@@ -24,7 +24,7 @@ angular.module('app')
             },
             {
                 name: 'แดชบอร์ด',
-                ref: 'main.employeetype',
+                ref: 'main.mainstats',
                 icon: 'insert_chart_outlined'
             },
         ];

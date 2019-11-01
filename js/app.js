@@ -64,11 +64,26 @@ angular.module('app', ['ui.router', 'ngMaterial', 'ngMessages', 'ngAnimate', 'ng
             })
 
             //BI
-            .state('main.employeetype', {
-                url: '/employeetype',
+            .state('main.mainstats', {
+                url: '/mainstats',
                 controller: 'StatsCtrl',
-                templateUrl: 'views/stats/employeetype.html'
-
+                templateUrl: 'views/stats/mainstats.html',
+                redirectTo: 'main.mainstats.stafftype',
+            })
+            .state('main.mainstats.stafftype', {
+                url: '/stafftype',
+                controller: 'StatsCtrl',
+                templateUrl: 'views/stats/mainstats.stafftype.html'
+            })
+            .state('main.mainstats.staffstartwork', {
+                url: '/staffstartwork',
+                controller: 'StatsstaffworkCtrl',
+                templateUrl: 'views/stats/mainstats.staffstartwork.html'
+            })
+            .state('main.mainstats.disteducation', {
+                url: '/disteducation',
+                controller: 'StatdisteducationCtrl',
+                templateUrl: 'views/stats/mainstats.disteducation.html'
             })
 
 

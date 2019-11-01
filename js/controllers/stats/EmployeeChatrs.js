@@ -1,11 +1,30 @@
 angular.module('app')
 
-    .controller('StatsCtrl', function ($scope, $rootScope, $http) {
+    .controller('StatsCtrl', function ($scope, $rootScope, $http, $state) {
 
         $rootScope.pageTitle = 'BI Jub Jub'
+
+        $scope.currentNav = getChildStatename($state.$current.name);
+
+        $scope.menu = [{
+                name: 'stafftype',
+                label: 'จำแนกตามประเภทบุคลากร',
+                state: 'main.mainstats.stafftype'
+            },
+            {
+                name: 'staffstartwork',
+                label: 'จำแนกการเข้า-ออกของบุคลากร',
+                state: 'main.mainstats.staffstartwork'
+            },
+            {
+                name: 'disteducation',
+                label: 'จำแนกตามวุฒิการศึกษา',
+                state: 'main.mainstats.disteducation'
+            },
+        ];
+
         $scope.datachartsEmptype = [];
         $scope.datachartsEmpedu = [];
-        $scope.menu = [];
 
         // GETDATA
         $scope.getdataemptype = function () {
@@ -17,87 +36,99 @@ angular.module('app')
                     $scope.datachartsEmptype = res.data;
                     $scope.lables = res.data.map(res => res.et_name);
                     $scope.totals = res.data.map(res => res.Total);
-                    console.log($scope.lables);
-                    console.log($scope.totals);
                     $scope.chartsemptype();
                 },
                 function (error) {
                     console.log(error);
                 }
             )
-        }
+        } //ประเภทบุคลากร
 
-        $scope.getdataempeducation = function () {
+        $scope.getteacheratworkdisttype = function () {
             $http({
-                url: 'http://app.rmutp.ac.th/api/bi/hrm/employeeeducation',
+                url: 'http://app.rmutp.ac.th/api/bi/hrm/teacheratworkdisttype',
                 method: 'GET',
             }).then(
                 function (res) {
-                    $scope.datachartsEmpedu = res.data;
-                    $scope.dlname = res.data.map(res => res.dl_name_th);
-                    $scope.degreetotals = res.data.map(res => res.degreeclass);
-                    console.log($scope.dlname);
-                    console.log($scope.degreetotals);
-                    $scope.chartsempeducation();
+                    $scope.datachartsEmptype = res.data;
+                    $scope.lables = res.data.map(res => res.el_name);
+                    $scope.totals = res.data.map(res => res.expert_num);
+                    $scope.chartteacheratworkdisttype();
                 },
                 function (error) {
                     console.log(error);
                 }
             )
-        }
+        } //จำนวนอาจารย์ สายวิชาการ แยกตามตำแหน่ง  ที่ปฏิบัติงานอยู่ปัจจุบัน
 
-        $scope.getacademicEmployeeEducation = function () {
+        $scope.getstaffsupportlinepositiondist = function () {
             $http({
-                url: 'http://app.rmutp.ac.th/api/bi/hrm/academicEmployeeEducation',
+                url: 'http://app.rmutp.ac.th/api/bi/hrm/staffsupportlinepositiondist',
                 method: 'GET',
             }).then(
                 function (res) {
-                    $scope.datachartsEmpedu = res.data;
-                    $scope.dlname = res.data.map(res => res.dl_name_th);
-                    $scope.degreetotals = res.data.map(res => res.degreeNum);
-                    console.log($scope.dlname);
-                    console.log($scope.degreetotals);
-                    $scope.chartacademicEmployeeEducation();
+                    $scope.datachartsEmptype = res.data;
+                    $scope.lables = res.data.map(res => res.el_name);
+                    $scope.totals = res.data.map(res => res.expert_num);
+                    $scope.chartstaffsupportlinepositiondist();
                 },
                 function (error) {
                     console.log(error);
                 }
             )
-        }
+        } //จำนวน บุคลากรสายสนับสนุน แยกตาม ปฏิบัติการ, ชำนาญการ, ชำนาญการพิเศษ
 
-        $scope.getacademicEmployeeSupport = function () {
+        $scope.getappointedexecutive62 = function () {
             $http({
-                url: 'http://app.rmutp.ac.th/api/bi/hrm/academicEmployeeSupport',
+                url: 'http://app.rmutp.ac.th/api/bi/hrm/appointedexecutive62',
                 method: 'GET',
             }).then(
                 function (res) {
-                    $scope.datachartsEmpedu = res.data;
-                    $scope.dlname = res.data.map(res => res.dl_name_th);
-                    $scope.degreetotals = res.data.map(res => res.degreeclass);
-                    $scope.chartademicEmployeeSupport();
+                    $scope.datachartsEmptype = res.data;
+                    $scope.lables = res.data.map(res => res.pmname);
+                    $scope.totals = res.data.map(res => res.manager);
+                    $scope.chartappointedexecutive62();
                 },
                 function (error) {
                     console.log(error);
                 }
             )
-        }
+        } // จำนวนผู้บริหารแบบแต่งตั้ง (ขาดข้อมูลหัวหน้างานในสายสนับสนุน)
 
-        $scope.getstartworkdistyeardepartline = function () {
+        $scope.getretiredistposition = function () {
             $http({
-                url: 'http://app.rmutp.ac.th/api/bi/hrm/startworkdistyeardepartline',
+                url: 'http://app.rmutp.ac.th/api/bi/hrm/retiredistposition',
                 method: 'GET',
             }).then(
                 function (res) {
                     $scope.datachartsEmpedu = res.data;
-                    $scope.deptname = res.data.map(res => res.dept_name_th);
-                    $scope.totals = res.data.map(res => res.total);
-                    $scope.chartstartworkdistyeardepartline();
+                    $scope.deptname = res.data.map(res => res.pos_name_th);
+                    $scope.totals = res.data.map(res => res.reitre_teacher);
+                    $scope.chartgetretiredistposition();
                 },
                 function (error) {
                     console.log(error);
                 }
             )
-        }
+        } //จำนวนผู้เกษียณ  จำแนกตามตำแหน่งวิชาการ
+
+        $scope.getretiredistline = function () {
+            $http({
+                url: 'http://app.rmutp.ac.th/api/bi/hrm/retiredistline',
+                method: 'GET',
+            }).then(
+                function (res) {
+                    $scope.datachartsEmpedu = res.data;
+                    $scope.deptname = res.data.map(res => res.pos_linename);
+                    $scope.totals = res.data.map(res => res.retire_num);
+                    $scope.chartgetretiredistline();
+                },
+                function (error) {
+                    console.log(error);
+                }
+            )
+        } //จำนวนผู้เกษียณ  จำแนกตามตำแหน่งวิชาการ ผศ รศ
+
 
 
 
@@ -134,17 +165,18 @@ angular.module('app')
                     }
                 }
             });
+
         }
 
-        $scope.chartsempeducation = function () {
-            new Chart(document.getElementById("chartsempeducation"), {
+        $scope.chartteacheratworkdisttype = function () {
+            new Chart(document.getElementById("chartteacheratworkdisttype"), {
                 type: 'bar',
                 data: {
-                    labels: $scope.dlname,
+                    labels: $scope.lables,
                     datasets: [{
                         label: "บุคลากรแบ่งแยกตามประเภท",
                         backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
-                        data: $scope.degreetotals
+                        data: $scope.totals
                     }]
                 },
                 options: {
@@ -159,15 +191,15 @@ angular.module('app')
             });
         }
 
-        $scope.chartacademicEmployeeEducation = function () {
-            new Chart(document.getElementById("chartacademicEmployeeEducation"), {
+        $scope.chartstaffsupportlinepositiondist = function () {
+            new Chart(document.getElementById("chartstaffsupportlinepositiondist"), {
                 type: 'bar',
                 data: {
-                    labels: $scope.dlname,
+                    labels: $scope.lables,
                     datasets: [{
                         label: "บุคลากรแบ่งแยกตามประเภท",
                         backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
-                        data: $scope.degreetotals
+                        data: $scope.totals
                     }]
                 },
                 options: {
@@ -182,15 +214,15 @@ angular.module('app')
             });
         }
 
-        $scope.chartademicEmployeeSupport = function () {
-            new Chart(document.getElementById("chartacademicEmployeeSupport"), {
+        $scope.chartappointedexecutive62 = function () {
+            new Chart(document.getElementById("chartappointedexecutive62"), {
                 type: 'bar',
                 data: {
-                    labels: $scope.dlname,
+                    labels: $scope.lables,
                     datasets: [{
                         label: "บุคลากรแบ่งแยกตามประเภท",
                         backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
-                        data: $scope.degreetotals
+                        data: $scope.totals
                     }]
                 },
                 options: {
@@ -205,8 +237,8 @@ angular.module('app')
             });
         }
 
-        $scope.chartstartworkdistyeardepartline = function () {
-            new Chart(document.getElementById("chartstartworkdistyeardepartline"), {
+        $scope.chartgetretiredistposition = function () {
+            new Chart(document.getElementById("chartgetretiredistposition"), {
                 type: 'bar',
                 data: {
                     labels: $scope.deptname,
@@ -224,12 +256,36 @@ angular.module('app')
             });
         }
 
+        $scope.chartgetretiredistline = function () {
+            new Chart(document.getElementById("chartgetretiredistline"), {
+                type: 'bar',
+                data: {
+                    labels: $scope.deptname,
+                    datasets: [{
+                        label: "บุคลากรแบ่งแยกตามประเภท",
+                        backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                        data: $scope.totals
+                    }]
+                },
+                options: {
+                    legend: {
+                        display: true
+                    }
+                }
+            });
+        }
+
+
+
+
+
         //EXECUTE
         $scope.getdataemptype();
-        $scope.getdataempeducation();
-        $scope.getacademicEmployeeEducation();
-        $scope.getacademicEmployeeSupport();
-        $scope.getstartworkdistyeardepartline();
+        $scope.getteacheratworkdisttype();
+        $scope.getstaffsupportlinepositiondist();
+        $scope.getretiredistposition();
+        $scope.getretiredistline();
+        $scope.getappointedexecutive62();
 
 
     })
