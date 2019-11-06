@@ -146,18 +146,25 @@ angular.module('app')
                     }]
                 },
                 options: {
-                    legend: {
-                        display: true,
-                        position: 'left',
-                        itemMaxWidth: 10,
-                        itemWrap: true,
+                    plugins: {
                         labels: {
-                            boxWidth: 20,
-                            boxHeight: 2,
-                            itemMaxWidth: 200,
-                            itemWrap: true
-                        },
+                            render: 'percentage',
+                            fontColor: ['green', 'white', 'red'],
+                            precision: 2
+                        }
                     },
+                    // legend: {
+                    //     display: true,
+                    //     position: 'left',
+                    //     itemMaxWidth: 10,
+                    //     itemWrap: true,
+                    //     labels: {
+                    //         boxWidth: 20,
+                    //         boxHeight: 2,
+                    //         itemMaxWidth: 200,
+                    //         itemWrap: true
+                    //     },
+                    // },
 
                     title: {
                         display: false,
