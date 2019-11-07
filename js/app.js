@@ -66,7 +66,7 @@ angular.module('app', ['ui.router', 'ngMaterial', 'ngMessages', 'ngAnimate', 'ng
             //BI
             .state('main.mainstats', {
                 url: '/mainstats',
-                controller: 'StatsCtrl',
+                controller: 'MenuCtrl',
                 templateUrl: 'views/stats/mainstats.html',
                 redirectTo: 'main.mainstats.stafftype',
             })

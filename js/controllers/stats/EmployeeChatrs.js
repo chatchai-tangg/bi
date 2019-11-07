@@ -4,25 +4,6 @@ angular.module('app')
 
         $rootScope.pageTitle = 'BI Jub Jub'
 
-        $scope.currentNav = getChildStatename($state.$current.name);
-
-        $scope.menu = [{
-                name: 'stafftype',
-                label: 'จำแนกตามประเภทบุคลากร',
-                state: 'main.mainstats.stafftype'
-            },
-            {
-                name: 'staffstartwork',
-                label: 'จำแนกการเข้า-ออกของบุคลากร',
-                state: 'main.mainstats.staffstartwork'
-            },
-            {
-                name: 'disteducation',
-                label: 'จำแนกตามวุฒิการศึกษา',
-                state: 'main.mainstats.disteducation'
-            },
-        ];
-
         $scope.datachartsEmptype = [];
         $scope.datachartsEmpedu = [];
 
@@ -95,39 +76,7 @@ angular.module('app')
             )
         } // จำนวนผู้บริหารแบบแต่งตั้ง (ขาดข้อมูลหัวหน้างานในสายสนับสนุน)
 
-        $scope.getretiredistposition = function () {
-            $http({
-                url: 'http://app.rmutp.ac.th/api/bi/hrm/retiredistposition',
-                method: 'GET',
-            }).then(
-                function (res) {
-                    $scope.datachartsEmpedu = res.data;
-                    $scope.deptname = res.data.map(res => res.pos_name_th);
-                    $scope.totals = res.data.map(res => res.reitre_teacher);
-                    $scope.chartgetretiredistposition();
-                },
-                function (error) {
-                    console.log(error);
-                }
-            )
-        } //จำนวนผู้เกษียณ  จำแนกตามตำแหน่งวิชาการ
 
-        $scope.getretiredistline = function () {
-            $http({
-                url: 'http://app.rmutp.ac.th/api/bi/hrm/retiredistline',
-                method: 'GET',
-            }).then(
-                function (res) {
-                    $scope.datachartsEmpedu = res.data;
-                    $scope.deptname = res.data.map(res => res.pos_linename);
-                    $scope.totals = res.data.map(res => res.retire_num);
-                    $scope.chartgetretiredistline();
-                },
-                function (error) {
-                    console.log(error);
-                }
-            )
-        } //จำนวนผู้เกษียณ  จำแนกตามตำแหน่งวิชาการ ผศ รศ
 
 
 
@@ -149,76 +98,26 @@ angular.module('app')
                     plugins: {
                         labels: {
                             render: 'percentage',
-                            fontColor: ['green', 'white', 'red'],
-                            precision: 2
-                        }
+                            precision: 1,
+                            position: 'border',
+                            fontColor: '#fff',
+                            fontSize: 13,
+                        },
                     },
-                    // legend: {
-                    //     display: true,
-                    //     position: 'left',
-                    //     itemMaxWidth: 10,
-                    //     itemWrap: true,
-                    //     labels: {
-                    //         boxWidth: 20,
-                    //         boxHeight: 2,
-                    //         itemMaxWidth: 200,
-                    //         itemWrap: true
-                    //     },
-                    // },
-
-                    title: {
-                        display: false,
-                        text: 'บุคลากรแบ่งแยกตามประเภท'
-                    }
-                }
-            });
-
-        }
-
-        $scope.chartteacheratworkdisttype = function () {
-            new Chart(document.getElementById("chartteacheratworkdisttype"), {
-                type: 'bar',
-                data: {
-                    labels: $scope.lables,
-                    datasets: [{
-                        label: "บุคลากรแบ่งแยกตามประเภท",
-                        backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
-                        data: $scope.totals
-                    }]
-                },
-                options: {
                     legend: {
-                        display: true
+                        display: true,
+                        position: 'left',
+                        itemWrap: true,
+                        labels: {
+                            boxWidth: 20,
+                            boxHeight: 2,
+                            itemMaxWidth: 200,
+                            itemWrap: true
+                        },
                     },
-                    title: {
-                        display: false,
-                        text: 'บุคลากรแบ่งแยกตามประเภท'
-                    }
                 }
             });
-        }
 
-        $scope.chartstaffsupportlinepositiondist = function () {
-            new Chart(document.getElementById("chartstaffsupportlinepositiondist"), {
-                type: 'bar',
-                data: {
-                    labels: $scope.lables,
-                    datasets: [{
-                        label: "บุคลากรแบ่งแยกตามประเภท",
-                        backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
-                        data: $scope.totals
-                    }]
-                },
-                options: {
-                    legend: {
-                        display: true
-                    },
-                    title: {
-                        display: false,
-                        text: 'บุคลากรแบ่งแยกตามประเภท'
-                    }
-                }
-            });
         }
 
         $scope.chartappointedexecutive62 = function () {
@@ -233,6 +132,14 @@ angular.module('app')
                     }]
                 },
                 options: {
+                    plugins: {
+                        labels: {
+                            render: 'value',
+                            position: 'border',
+
+                            fontSize: 13,
+                        },
+                    },
                     legend: {
                         display: true
                     },
@@ -244,11 +151,11 @@ angular.module('app')
             });
         }
 
-        $scope.chartgetretiredistposition = function () {
-            new Chart(document.getElementById("chartgetretiredistposition"), {
-                type: 'bar',
+        $scope.chartteacheratworkdisttype = function () {
+            new Chart(document.getElementById("chartteacheratworkdisttype"), {
+                type: 'doughnut',
                 data: {
-                    labels: $scope.deptname,
+                    labels: $scope.lables,
                     datasets: [{
                         label: "บุคลากรแบ่งแยกตามประเภท",
                         backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
@@ -256,18 +163,24 @@ angular.module('app')
                     }]
                 },
                 options: {
-                    legend: {
-                        display: true
-                    }
+                    plugins: {
+                        labels: {
+                            render: 'percentage',
+                            precision: 1,
+                            position: 'border',
+                            fontColor: '#fff',
+                            fontSize: 13,
+                        },
+                    },
                 }
             });
         }
 
-        $scope.chartgetretiredistline = function () {
-            new Chart(document.getElementById("chartgetretiredistline"), {
-                type: 'bar',
+        $scope.chartstaffsupportlinepositiondist = function () {
+            new Chart(document.getElementById("chartstaffsupportlinepositiondist"), {
+                type: 'doughnut',
                 data: {
-                    labels: $scope.deptname,
+                    labels: $scope.lables,
                     datasets: [{
                         label: "บุคลากรแบ่งแยกตามประเภท",
                         backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
@@ -275,12 +188,25 @@ angular.module('app')
                     }]
                 },
                 options: {
+                    plugins: {
+                        labels: {
+                            render: 'percentage',
+                            precision: 1,
+                            position: 'border',
+                            fontColor: '#fff',
+                            fontSize: 13,
+                        },
+                    },
                     legend: {
                         display: true
-                    }
+                    },
                 }
             });
         }
+
+
+
+
 
 
 
@@ -290,8 +216,6 @@ angular.module('app')
         $scope.getdataemptype();
         $scope.getteacheratworkdisttype();
         $scope.getstaffsupportlinepositiondist();
-        $scope.getretiredistposition();
-        $scope.getretiredistline();
         $scope.getappointedexecutive62();
 
 
