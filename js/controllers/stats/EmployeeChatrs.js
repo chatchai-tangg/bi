@@ -77,10 +77,6 @@ angular.module('app')
         } // จำนวนผู้บริหารแบบแต่งตั้ง (ขาดข้อมูลหัวหน้างานในสายสนับสนุน)
 
 
-
-
-
-
         // PLOTCHARTS
 
         $scope.chartsemptype = function () {
@@ -127,7 +123,7 @@ angular.module('app')
                     labels: $scope.lables,
                     datasets: [{
                         label: "บุคลากรแบ่งแยกตามประเภท",
-                        backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                        backgroundColor: ["#3e95cd"],
                         data: $scope.totals
                     }]
                 },

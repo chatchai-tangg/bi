@@ -1,0 +1,210 @@
+จำนวนนักศึกษาผู้สมัคร แยกตามปี
+
+SELECT count(applicantcode) as app_num,acadyear
+from avsreg.applicant
+group by acadyear
+order by acadyear desc
+
+---------------------------
+[4]
+จำนวนนักศึกษา จำแนกตามสถานะ
+select count(studentcode) as cs, admitacadyear,studentstatus,
+case 
+    when studentstatus = 10 then 'ปกติ' 
+    when studentstatus = 12 then 'ลาพักการศึกษา'
+    when studentstatus = 60 then 'ลาออก'
+    when studentstatus = 70 then 'พ้นสภาพ'
+else
+          'ถอนสภาพ'
+end
+    as status
+    
+from avsreg.studentmaster 
+
+where studentstatus in ('10','12','60','70','80') and admitacadyear >=2558
+group by admitacadyear,studentstatus
+order by admitacadyear desc
+
+----------------------------
+[3]
+จำนวนนักศึกษาแยกสายวิทย์-สายสังคม แยกตามปี 
+SELECT
+    COUNT(avsreg.studentmaster.studentcode) AS student,
+    avsreg.studentmaster.admitacadyear,      
+       CASE 
+        WHEN  studentmaster.facultyid in (102,901,903) then 'สายสังคมศาสตร์'
+        ELSE 'สายวิทยาศาสตร์'
+        END AS facType         
+FROM
+    avsreg.studentmaster
+    INNER JOIN avsreg.faculty ON avsreg.faculty.facultyid = avsreg.studentmaster.facultyid        
+WHERE
+    avsreg.studentmaster.admitacadyear >= 2528
+    AND avsreg.studentmaster.studentstatus = 10
+    AND faculty.facultyid in (102,901,902,903,904,905,906,907,908,101)   
+GROUP BY
+        avsreg.studentmaster.admitacadyear,
+        (CASE 
+        WHEN studentmaster.facultyid in (102,901,903) then 'สายสังคมศาสตร์'
+        ELSE 'สายวิทยาศาสตร์'
+        END)       
+ORDER BY
+    avsreg.studentmaster.admitacadyear DESC
+----------------------------
+[5]
+จำนวนชั่วโมงสอนของอาจารย์ตามรายชื่อ ตั้งแต่ปี 2560 เป็นต้นไป แยกตามรายชื่ออาจารย์
+SELECT x.officerid, x.officername, sum(x.hours),x.semesterindex
+
+FROM (
+
+SELECT DISTINCT
+    avsreg.classtimetable.timeslotfrom   AS timefrom,
+    avsreg.classtimetable.timeslotto     AS timesto,
+    avsreg.officer.officerid,
+    avsreg.officer.officername,
+    ( avsreg.classtimetable.timeslotto - avsreg.classtimetable.timeslotfrom ) / 12 AS hours,
+    avsreg.classinstructor.semesterindex
+FROM
+    avsreg.officer
+    INNER JOIN avsreg.classinstructor ON avsreg.officer.officerid = avsreg.classinstructor.officerid
+    INNER JOIN avsreg.classtimetable ON avsreg.classinstructor.classid = avsreg.classtimetable.classid
+    INNER JOIN avsreg.class ON avsreg.classtimetable.classid = avsreg.class.classid
+    INNER JOIN avsreg.course ON avsreg.class.courseid = avsreg.course.courseid
+WHERE
+    avsreg.course.courseid != 10000004755   
+    and avsreg.classinstructor.semesterindex >=25601
+    ) x
+    
+GROUP BY x.officerid, x.officername,x.semesterindex
+
+ORDER by x.officerid,x.semesterindex desc
+
+----------------------------
+[6]
+จำนวนอาจารย์ที่ปรึกษา จำแนกตามปีและภาคการศึกษา
+SELECT 
+    COUNT(avsreg.officer.officerid) AS "Count_OFFICERID",
+    avsreg.classinstructor.semesterindex
+FROM
+    avsreg.officer
+    INNER JOIN avsreg.classinstructor ON avsreg.officer.officerid = avsreg.classinstructor.officerid
+    INNER JOIN avsreg.classtimetable ON avsreg.classinstructor.classid = avsreg.classtimetable.classid
+    INNER JOIN avsreg.class ON avsreg.classtimetable.classid = avsreg.class.classid
+    INNER JOIN avsreg.course ON avsreg.class.courseid = avsreg.course.courseid
+WHERE    
+     avsreg.course.courseid = 10000004755 
+     AND avsreg.classinstructor.semesterindex >= 25591
+GROUP BY
+    avsreg.course.courseid,avsreg.classinstructor.semesterindex
+ORDER BY
+    avsreg.classinstructor.semesterindex
+
+----------------------------
+[7] 
+ประเภททุนการศึกษา (จำนวนทุนการศึกษาแยกประเภททุน และตามปีการศึกษา)
+SELECT
+    avsreg.studentscholar.acadyear,
+    COUNT(avsreg.studentscholar.studentid) AS "Count_STUDENTID",
+    avsreg.scholar.scholartype,
+    CASE  
+    WHEN avsreg.scholar.scholartype in ('C','N') THEN 'ทุนมหาวิทยาลัยเทคโนโลยีราชมงคลพระนคร'
+    WHEN avsreg.scholar.scholartype = 'R' THEN 'ทุน กยศ./กรอ.'
+    WHEN avsreg.scholar.scholartype = 'D' THEN 'NULL'
+    ELSE 'มหาวิทยาลัย/ศิษย์เก่า/หน่วยงานภายนอก' END as type
+    
+FROM
+    avsreg.studentscholar
+    INNER JOIN avsreg.scholar ON avsreg.studentscholar.scholarid = avsreg.scholar.scholarid
+WHERE
+    avsreg.studentscholar.acadyear >= 2560
+    AND avsreg.scholar.scholartype != 'A'
+GROUP BY
+    avsreg.studentscholar.acadyear,
+    avsreg.scholar.scholartype
+ORDER BY
+    avsreg.studentscholar.acadyear desc,
+    avsreg.scholar.scholartype
+----------------------------
+
+[8]
+ยอดเงินหนี้ค้างชำระ จำแนกตามสถานะ นักศึกษา, จำแนกตามภาคการศึกษา, จำแนกตามปี ย้อนหลัง ปี 2559-2562 
+SELECT
+    avsreg.enrollfee.acadyear,
+    avsreg.enrollfee.semester,
+    SUM(avsreg.enrollfee.balance) as a,
+    CASE  
+        WHEN avsreg.studentmaster.studentstatus = 60 THEN 'ลาออก'
+        WHEN avsreg.studentmaster.studentstatus = 70 THEN 'พ้นสภาพ'
+        ELSE 'ปกติ' 
+    END as status
+FROM
+    (avsreg.enrollfee
+    INNER JOIN avsreg.studentmaster ON avsreg.enrollfee.studentid = avsreg.studentmaster.studentid)
+    INNER JOIN avsreg.studentstatus ON avsreg.enrollfee.semester = avsreg.studentstatus.semester
+                                       AND avsreg.enrollfee.acadyear = avsreg.studentstatus.acadyear
+                                       AND avsreg.studentmaster.studentid = avsreg.studentstatus.studentid
+WHERE
+    avsreg.enrollfee.acadyear >= 2559
+    
+GROUP BY
+    avsreg.enrollfee.acadyear,
+    avsreg.enrollfee.semester,
+    avsreg.studentmaster.studentstatus
+
+HAVING
+    ( SUM(avsreg.enrollfee.balance) ) > 0
+
+ORDER BY
+    avsreg.enrollfee.acadyear
+----------------------------------------------------------
+[9]
+รายชื่ออาจารย์ประจำหลักสูตร
+SELECT
+    vntqf.tqfcurr.currname,
+    vntqf.tqfcurr.curryear,
+    vntqf.tqfcurr.currstatus,
+    vntqf.tqfcurrofficer.officertype,
+    vntqf.tqfcurrofficer.officerstatus,
+    vntqf.tqfcurrofficer.sequence,
+    avsreg.prefix.prefixname,
+    avsreg.officer.officername,
+    avsreg.officer.officersurname
+FROM
+    ((vntqf.tqfcurr
+    INNER JOIN vntqf.tqfcurrofficer ON vntqf.tqfcurr.currid = vntqf.tqfcurrofficer.currid )
+    INNER JOIN avsreg.officer ON vntqf.tqfcurrofficer.officerid = avsreg.officer.officerid )
+    INNER JOIN avsreg.prefix ON avsreg.officer.prefixid = avsreg.prefix.prefixid
+WHERE
+    vntqf.tqfcurr.curryear >= 2562
+    AND (vntqf.tqfcurr.currstatus) = 'N'
+    AND (vntqf.tqfcurrofficer.officerstatus) = 'N'
+ORDER BY
+    vntqf.tqfcurr.currcode,
+    vntqf.tqfcurr.curryear,
+    vntqf.tqfcurrofficer.officertype,
+    vntqf.tqfcurrofficer.sequence
+  
+----------------------------
+[10]
+จำนวนหลักสูตรที่เปิดสอน แยกวิทย์ สังคม ปี 2559 - ปัจจุบัน
+SELECT
+    CASE 
+	WHEN vntqf.tqfcurr.currgroupuoc = '01' then 'สายวิทยาศาสตร์'
+    	WHEN vntqf.tqfcurr.currgroupuoc = '02' then 'สายสังคม'
+       	ELSE 'ไม่ระบุ' 
+    END AS type,
+    COUNT(vntqf.tqfcurr.currcode) AS curname  
+FROM
+    vntqf.tqfcurr
+WHERE
+    vntqf.tqfcurr.curryear >= 2559
+    AND ( vntqf.tqfcurr.currstatus ) = 'N'   
+GROUP BY vntqf.tqfcurr.currgroupuoc
+----------------------------
+รายชื่อนักศึกษา
+select studentid,studentcode,programid,admitacadyear
+from avsreg.studentmaster
+order by admitacadyear desc
+-----------------------------
+หลักสูตร
+VNTQF_TQFCURR.CURRGROUPUOC=01 คือสายวิทย์, 02 คือสายสังคมครับ
