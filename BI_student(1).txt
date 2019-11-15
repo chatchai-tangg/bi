@@ -54,9 +54,7 @@ ORDER BY
 [5]
 จำนวนชั่วโมงสอนของอาจารย์ตามรายชื่อ ตั้งแต่ปี 2560 เป็นต้นไป แยกตามรายชื่ออาจารย์
 SELECT x.officerid, x.officername, sum(x.hours),x.semesterindex
-
 FROM (
-
 SELECT DISTINCT
     avsreg.classtimetable.timeslotfrom   AS timefrom,
     avsreg.classtimetable.timeslotto     AS timesto,

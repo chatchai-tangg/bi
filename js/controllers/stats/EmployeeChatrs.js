@@ -201,13 +201,6 @@ angular.module('app')
         }
 
 
-
-
-
-
-
-
-
         //EXECUTE
         $scope.getdataemptype();
         $scope.getteacheratworkdisttype();

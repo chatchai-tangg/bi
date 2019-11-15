@@ -21,6 +21,11 @@ angular.module('app')
                 label: 'จำแนกตามวุฒิการศึกษา',
                 state: 'main.mainstats.disteducation'
             },
+            {
+                name: 'stddetails',
+                label: 'ข้อมูลนักศึกษา',
+                state: 'main.mainstats.stddetails'
+            },
         ];
 
     })

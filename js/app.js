@@ -85,6 +85,11 @@ angular.module('app', ['ui.router', 'ngMaterial', 'ngMessages', 'ngAnimate', 'ng
                 controller: 'StatdisteducationCtrl',
                 templateUrl: 'views/stats/mainstats.disteducation.html'
             })
+            .state('main.mainstats.stddetails', {
+                url: '/stddetails',
+                controller: 'StddetailsCTRL',
+                templateUrl: 'views/stats/mainstats.stddetails.html'
+            })
 
 
             .state('logout', {
