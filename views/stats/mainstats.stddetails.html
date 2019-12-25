@@ -1,18 +1,18 @@
 <div layout="row" layout-wrap layout-padding layout-align="center center">
-    <div flex="100" flex-gt-md="80">
+    <div flex="100" flex-xl="50">
         <md-card>
             <md-card-title>
-                <md-card-title-text>
-                    <span class="md-headline">จำนวนผู้สมัครนักศึกษา</span>
+                <md-card-title-text layout-align="center center">
+                    <span class="md-headline">จำนวนนักศึกษา ผู้สมัครเข้าศึกษา จำแนกตามปีการศึกษา</span>
                 </md-card-title-text>
             </md-card-title>
             <md-card-content>
-                <canvas id="chartstdapplydistyear" style="max-width: 800px;"></canvas>
+                <canvas id="chartstdapplydistyear"></canvas>
             </md-card-content>
         </md-card>
     </div>
 
-    <div flex="100" flex-gt-md="80">
+    <!-- <div flex="100" flex-gt-md="80">
         <md-card>
             <md-card-title>
                 <md-card-title-text>
@@ -23,72 +23,102 @@
                 <canvas id="chartstddistyeartype" style="max-width: 800px;"></canvas>
             </md-card-content>
         </md-card>
-    </div>
-
-    <div flex="100" flex-gt-md="80">
+    </div> -->
+    <!-- <div flex="100" flex-gt-md="80" flex-lg="50">
         <md-card>
             <md-card-title>
-                <md-card-title-text>
+                <md-card-title-text layout-align="center center">
                     <span class="md-headline">นักศึกษาแยกสายวิทย์-สายสังคม</span>
                 </md-card-title-text>
             </md-card-title>
             <md-card-content>
-                <canvas id="chartstdsocialsciencedistyear" style="max-width: 800px;"></canvas>
+                <canvas id="chartstdsocialsciencedistyear"></canvas>
+            </md-card-content>
+        </md-card>
+    </div> -->
+
+    <div flex="100" flex-xl="50">
+        <md-card>
+            <md-card-title>
+                <md-card-title-text layout-align="center center">
+                    <span class="md-headline">จำนวนนักศึกษาทั้งสิ้น จำแนกตามปีการศึกษา 2560 - 2562</span>
+                </md-card-title-text>
+            </md-card-title>
+            <md-card-content>
+                <canvas id="chartstudentdistyear"></canvas>
             </md-card-content>
         </md-card>
     </div>
 
-    <div flex="100" flex-gt-md="80">
+
+
+    <div flex="100" flex-xl="50">
         <md-card>
             <md-card-title>
-                <md-card-title-text>
+                <md-card-title-text layout-align="center center">
                     <span class="md-headline">อาจารย์ที่ปรึกษา จำแนกตามปีและภาคการศึกษา</span>
                 </md-card-title-text>
             </md-card-title>
             <md-card-content>
-                <canvas id="chartadviserdistyearterm" style="max-width: 800px;"></canvas>
+                <canvas id="chartadviserdistyearterm"></canvas>
             </md-card-content>
         </md-card>
     </div>
 
-    <div flex="100" flex-gt-md="80">
+    <div flex="100" flex-xl="50">
         <md-card>
             <md-card-title>
-                <md-card-title-text>
-                    <span class="md-headline">ทุนการศึกษา</span>
+                <md-card-title-text layout-align="center center">
+                    <span class="md-headline">จำนวนหลักสูตรที่เปิดสอน จำแนกตามสายวิทยาศาสตร์และสังคม</span>
                 </md-card-title-text>
             </md-card-title>
             <md-card-content>
-                <canvas id="chartscholardistyear"></canvas>
+                <canvas id="chartcoursesdistsciencesocial"></canvas>
             </md-card-content>
         </md-card>
     </div>
 
-    <div flex="100" flex-gt-md="80">
+    <div flex="100" flex-xl="50">
         <md-card>
             <md-card-title>
-                <md-card-title-text>
-                    <span class="md-headline">ยอดเงินหนี้ค้างชำระ</span>
+                <md-card-title-text layout-align="center center">
+                    <span class="md-headline">จำนวนเงินค่าลงทะเบียนทั้งสิ้น และยอดค้างชำระ ปีการศึกษา 2562</span>
                 </md-card-title-text>
             </md-card-title>
             <md-card-content>
-                <canvas id="chartdebtstddistyear" style="max-width: 800px;"></canvas>
+                <canvas id="chartdebtstddistyear"></canvas>
             </md-card-content>
         </md-card>
     </div>
 
-    <div flex="100" flex-gt-md="80">
+    <div flex="100" flex-xl="50">
         <md-card>
             <md-card-title>
-                <md-card-title-text>
-                    <span class="md-headline">คอร์สที่เปิดสอน</span>
+                <md-card-title-text layout-align="center center">
+                    <span class="md-headline">จำนวนผู้รับทุน กยศ.กรอ และจำนวนเงินที่ได้รับ</span>
                 </md-card-title-text>
             </md-card-title>
             <md-card-content>
-                <canvas id="chartcoursesdistsciencesocial" style="max-width: 800px;"></canvas>
+                <canvas id="chartdeptscholardisttype"></canvas>
             </md-card-content>
         </md-card>
     </div>
+
+    <div flex="100" flex-xl="50">
+        <md-card>
+            <md-card-title>
+                <md-card-title-text layout-align="center center">
+                    <span class="md-headline">จำนวนเงินทุน ที่ มทร.พระนคร มอบให้แก่นักศึกษา </span>
+                    <span class="md-headline">จำแนกตามประเภททุนและปีการศึกษา</span>
+                </md-card-title-text>
+            </md-card-title>
+            <md-card-content>
+                <canvas id="chartdeptscholarrmutpdisttype"></canvas>
+            </md-card-content>
+        </md-card>
+    </div>
+
+
 
 
 

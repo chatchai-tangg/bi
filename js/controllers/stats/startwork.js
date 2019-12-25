@@ -2,10 +2,42 @@ angular.module('app')
 
     .controller('StatsstaffworkCtrl', function ($scope, $rootScope, $http, $state) {
 
-        $rootScope.pageTitle = 'BI Jub Jub';
-
-
         //GETDATA
+
+        $scope.getstartworksupportandacadamic = function () {
+            $http({
+                url: 'http://app.rmutp.ac.th/api/bi/hrm/startworksupportandacadamic',
+                method: 'GET',
+            }).then(
+                function (res) {
+                    $scope.datachartsEmpedu = res.data;
+                    $scope.deptname = res.data.map(res => res.pos_linename);
+                    $scope.totals = res.data.map(res => res.total_start);
+                    $scope.chartstartworksupportandacadamic();
+                },
+                function (error) {
+                    console.log(error);
+                }
+            )
+        } //จำนวนคนเริ่มปฏิบัติงาน (ผู้สมัครเข้าทำงาน) แยกตามประเภทบุคลากร (สายวิชาการ-สายสนับสนุน)
+
+        $scope.getstaffleave = function () {
+            $http({
+                url: 'http://app.rmutp.ac.th/api/bi/hrm/staffleave',
+                method: 'GET',
+            }).then(
+                function (res) {
+                    $scope.datachartsEmpedu = res.data;
+                    $scope.deptname = res.data.map(res => res.pos_linename);
+                    $scope.totals = res.data.map(res => res.sums);
+                    $scope.chartstaffleave();
+                },
+                function (error) {
+                    console.log(error);
+                }
+            )
+        } //จำนวนคนลาออก (ไม่รวมเกษียณ) แยกตามประเภทบุคลากร (สายวิชาการ-สายสนับสนุน)
+
         $scope.getstartworkdistyearfaculty = function () {
             $http({
                 url: 'http://app.rmutp.ac.th/api/bi/hrm/startworkdistyearfaculty',
@@ -57,23 +89,6 @@ angular.module('app')
             )
         } //คนเริ่มปฏิบัติงาน แยกตามปี แยกตามกอง
 
-        $scope.getstartworksupportandacadamic = function () {
-            $http({
-                url: 'http://app.rmutp.ac.th/api/bi/hrm/startworksupportandacadamic',
-                method: 'GET',
-            }).then(
-                function (res) {
-                    $scope.datachartsEmpedu = res.data;
-                    $scope.deptname = res.data.map(res => res.pos_linename);
-                    $scope.totals = res.data.map(res => res.total_start);
-                    $scope.chartstartworksupportandacadamic();
-                },
-                function (error) {
-                    console.log(error);
-                }
-            )
-        } //จำนวนคนเริ่มปฏิบัติงาน (ผู้สมัครเข้าทำงาน) แยกตามประเภทบุคลากร (สายวิชาการ-สายสนับสนุน)
-
         $scope.getretiredistposition = function () {
             $http({
                 url: 'http://app.rmutp.ac.th/api/bi/hrm/retiredistposition',
@@ -109,38 +124,13 @@ angular.module('app')
         } //จำนวนผู้เกษียณ  จำแนกตามตำแหน่งวิชาการ ผศ รศ
 
 
-        //PLOTCHARTS
-        $scope.chartstartworkdistyearfaculty = function () {
-            new Chart(document.getElementById("chartstartworkdistyearfaculty"), {
-                type: 'horizontalBar',
-                data: {
-                    labels: $scope.deptname,
-                    datasets: [{
-                        label: "ข้อมูลปี 2557-2562",
-                        backgroundColor: ["#e600ca", "#ff61ed", "#999999", "#00d1ff", "#ffff30", "#a8022d", "#fff7b0", "#00329c", "#662703"],
-                        data: $scope.totals
-                    }]
-                },
-                options: {
-                    plugins: {
-                        labels: {
-                            render: 'value',
-                        }
-                    },
-                    legend: {
-                        display: false
-                    },
-                    title: {
-                        display: true,
-                        text: 'จำนวนบุคลากรเริ่มปฎิบัติงาน'
-                    }
-                }
-            });
-        }
 
-        $scope.chartstartworkdistyearinstitute = function () {
-            new Chart(document.getElementById("chartstartworkdistyearinstitute"), {
-                type: 'horizontalBar',
+        // ["#e600ca", "#ff61ed", "#999999", "#00d1ff", "#ffff30", "#a8022d", "#fff7b0", "#00329c", "#662703"],
+        //PLOTCHARTS
+
+        $scope.chartstartworksupportandacadamic = function () {
+            new Chart(document.getElementById("chartstartworksupportandacadamic"), {
+                type: 'doughnut',
                 data: {
                     labels: $scope.deptname,
                     datasets: [{
@@ -150,8 +140,117 @@ angular.module('app')
                     }]
                 },
                 options: {
+                    plugins: {
+                        datalabels: {
+                            color: 'white',
+                            formatter: (value, ctx) => {
+                                let sum = 0;
+                                let dataArr = ctx.chart.data.datasets[0].data;
+                                dataArr.map(data => {
+                                    sum += data;
+                                });
+                                let percentage = (value * 100 / sum).toFixed(0) + "%";
+                                return percentage;
+                            },
+                        }
+                    },
                     legend: {
                         display: true
+                    }
+                }
+            });
+        }
+
+        $scope.chartstaffleave = function () {
+            new Chart(document.getElementById("chartstaffleave"), {
+                type: 'doughnut',
+                data: {
+                    labels: $scope.deptname,
+                    datasets: [{
+                        label: "บุคลากรแบ่งแยกตามประเภท",
+                        backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                        data: $scope.totals
+                    }]
+                },
+                options: {
+                    plugins: {
+                        datalabels: {
+                            color: 'white',
+                            formatter: (value, ctx) => {
+                                let sum = 0;
+                                let dataArr = ctx.chart.data.datasets[0].data;
+                                dataArr.map(data => {
+                                    sum += data;
+                                });
+                                let percentage = (value * 100 / sum).toFixed(0) + "%";
+                                return percentage;
+                            },
+                        }
+                    },
+                    legend: {
+                        display: true
+                    }
+                }
+            });
+        }
+
+        $scope.chartstartworkdistyearfaculty = function () {
+            new Chart(document.getElementById("chartstartworkdistyearfaculty"), {
+                type: 'bar',
+                data: {
+                    labels: $scope.deptname,
+                    datasets: [{
+                        label: "ข้อมูลปี 2557-2562",
+                        backgroundColor: "#a8022d",
+                        data: $scope.totals
+                    }]
+                },
+                options: {
+                    plugins: {
+                        labels: {
+                            render: 'value',
+                        },
+                        datalabels: {
+                            color: 'white'
+                        }
+                    },
+                    legend: {
+                        display: false
+                    },
+                    title: {
+                        display: true,
+                        text: 'จำนวนผู้สมัคร'
+                    }
+                }
+            });
+        }
+
+        $scope.chartstartworkdistyearinstitute = function () {
+            new Chart(document.getElementById("chartstartworkdistyearinstitute"), {
+                type: 'bar',
+                data: {
+                    labels: $scope.deptname,
+                    datasets: [{
+                        label: "บุคลากรแบ่งแยกตามประเภท",
+                        backgroundColor: "#00d1ff",
+                        data: $scope.totals
+                    }]
+                },
+                options: {
+                    plugins: {
+                        colorschemes: {
+                            scheme: 'brewer.SetOne6'
+                        },
+                        datalabels: {
+                            color: 'white'
+                        }
+                    },
+                    legend: {
+                        display: false
+                    },
+                    title: {
+                        display: true,
+                        text: 'จำนวนผู้สมัคร'
                     }
                 }
             });
@@ -164,32 +263,22 @@ angular.module('app')
                     labels: $scope.deptname,
                     datasets: [{
                         label: "บุคลากรแบ่งแยกตามประเภท",
-                        backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                        backgroundColor: "#8e5ea2",
                         data: $scope.totals
                     }]
                 },
                 options: {
+                    plugins: {
+                        datalabels: {
+                            color: 'white'
+                        }
+                    },
                     legend: {
-                        display: true
-                    }
-                }
-            });
-        }
-
-        $scope.chartstartworksupportandacadamic = function () {
-            new Chart(document.getElementById("chartstartworksupportandacadamic"), {
-                type: 'bar',
-                data: {
-                    labels: $scope.deptname,
-                    datasets: [{
-                        label: "บุคลากรแบ่งแยกตามประเภท",
-                        backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
-                        data: $scope.totals
-                    }]
-                },
-                options: {
-                    legend: {
-                        display: true
+                        display: false
+                    },
+                    title: {
+                        display: true,
+                        text: 'จำนวนผู้สมัคร'
                     }
                 }
             });
@@ -197,16 +286,33 @@ angular.module('app')
 
         $scope.chartgetretiredistposition = function () {
             new Chart(document.getElementById("chartgetretiredistposition"), {
-                type: 'bar',
+                type: 'doughnut',
                 data: {
                     labels: $scope.deptname,
                     datasets: [{
                         label: "บุคลากรแบ่งแยกตามประเภท",
-                        backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                        // backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
                         data: $scope.totals
                     }]
                 },
                 options: {
+                    plugins: {
+                        colorschemes: {
+                            scheme: 'brewer.SetTwo4'
+                        },
+                        datalabels: {
+                            color: 'black',
+                            formatter: (value, ctx) => {
+                                let sum = 0;
+                                let dataArr = ctx.chart.data.datasets[0].data;
+                                dataArr.map(data => {
+                                    sum += data;
+                                });
+                                let percentage = (value * 100 / sum).toFixed(0) + "%";
+                                return percentage;
+                            },
+                        }
+                    },
                     legend: {
                         display: true
                     }
@@ -216,16 +322,33 @@ angular.module('app')
 
         $scope.chartgetretiredistline = function () {
             new Chart(document.getElementById("chartgetretiredistline"), {
-                type: 'bar',
+                type: 'doughnut',
                 data: {
                     labels: $scope.deptname,
                     datasets: [{
                         label: "บุคลากรแบ่งแยกตามประเภท",
-                        backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                        // backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
                         data: $scope.totals
                     }]
                 },
                 options: {
+                    plugins: {
+                        colorschemes: {
+                            scheme: 'brewer.Accent3'
+                        },
+                        datalabels: {
+                            color: 'black',
+                            formatter: (value, ctx) => {
+                                let sum = 0;
+                                let dataArr = ctx.chart.data.datasets[0].data;
+                                dataArr.map(data => {
+                                    sum += data;
+                                });
+                                let percentage = (value * 100 / sum).toFixed(0) + "%";
+                                return percentage;
+                            },
+                        }
+                    },
                     legend: {
                         display: true
                     }
@@ -234,10 +357,11 @@ angular.module('app')
         }
 
         // EXECUTE
+        $scope.getstartworksupportandacadamic();
+        $scope.getstaffleave();
         $scope.getstartworkdistyearfaculty();
         $scope.getstartworkdistyearinstitute();
         $scope.getstartworkdistyeardivision();
-        $scope.getstartworksupportandacadamic();
         $scope.getretiredistposition();
         $scope.getretiredistline();
     })

@@ -2,25 +2,30 @@ angular.module('app')
 
     .controller('MenuCtrl', function ($scope, $rootScope, $state) {
 
-        $rootScope.pageTitle = 'BI Jub Jub'
+        $rootScope.pageTitle = 'แดชบอร์ดข้อมูลสารสนเทศ'
 
         $scope.currentNav = getChildStatename($state.$current.name);
 
         $scope.menu = [{
                 name: 'stafftype',
-                label: 'จำแนกตามประเภทบุคลากร',
+                label: 'ประเภทบุคลากร',
                 state: 'main.mainstats.stafftype'
             },
             {
-                name: 'staffstartwork',
-                label: 'จำแนกการเข้า-ออกของบุคลากร',
-                state: 'main.mainstats.staffstartwork'
+                name: 'staffline',
+                label: 'สายงานบุคลากรและวุฒิการศึกษา',
+                state: 'main.mainstats.staffline'
             },
             {
-                name: 'disteducation',
-                label: 'จำแนกตามวุฒิการศึกษา',
-                state: 'main.mainstats.disteducation'
+                name: 'staffstartwork',
+                label: 'การเข้า-ออกของบุคลากร',
+                state: 'main.mainstats.staffstartwork'
             },
+            // {
+            //     name: 'disteducation',
+            //     label: 'วุฒิการศึกษา',
+            //     state: 'main.mainstats.disteducation'
+            // },
             {
                 name: 'stddetails',
                 label: 'ข้อมูลนักศึกษา',

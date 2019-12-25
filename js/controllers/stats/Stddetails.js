@@ -4,6 +4,12 @@ angular.module('app')
 
         $scope.datachartsSTD = [];
 
+        function commaify(value) {
+            var result = ('' + value).replace(/^(-?\d+)(\d{3})/, '$1,$2');
+            return value == result ? result : commaify(result);
+        }
+
+
         //GETDATA
         $scope.getacademicEmployeeEducation = function () {
             $http({
@@ -89,40 +95,6 @@ angular.module('app')
                 }
             )
         } //จำนวนนักศึกษา จำแนกตามสถานะ (พ้นสภาพ)
-
-        $scope.getstdsocialdistyear = function () {
-            $http({
-                url: 'http://app.rmutp.ac.th/api/bi/std/stdsocialdistyear',
-                method: 'GET',
-            }).then(
-                function (res) {
-                    $scope.datachartsSTD = res.data;
-                    $scope.lbnamesocial = res.data.map(res => res.ADMITACADYEAR);
-                    $scope.totalssocial = res.data.map(res => res.STUDENT);
-                    $scope.chartstdsocialsciencedistyear();
-                },
-                function (error) {
-                    console.log(error);
-                }
-            )
-        } //นักศึกษาแยกสายวิทย์-สายสังคม (สังคม)
-
-        $scope.getstdsciencedistyear = function () {
-            $http({
-                url: 'http://app.rmutp.ac.th/api/bi/std/stdsciencedistyear',
-                method: 'GET',
-            }).then(
-                function (res) {
-                    $scope.datachartsSTD = res.data;
-                    $scope.lbnamescience = res.data.map(res => res.ADMITACADYEAR);
-                    $scope.totalsscience = res.data.map(res => res.STUDENT);
-                    $scope.chartstdsocialsciencedistyear();
-                },
-                function (error) {
-                    console.log(error);
-                }
-            )
-        } //นักศึกษาแยกสายวิทย์-สายสังคม (วิทยาศาสตร์)
 
         $scope.getadviserdistyearterm1 = function () {
             $http({
@@ -251,9 +223,9 @@ angular.module('app')
             }).then(
                 function (res) {
                     $scope.datachartsSTD = res.data;
-                    $scope.lbnamesdebtdislodge = res.data.map(res => res.ACADYEAR);
-                    $scope.totalsdebtdislodge = res.data.map(res => res.SUMBALANCE);
-
+                    $scope.lbnamesdebt = res.data.map(res => res.ACADYEAR);
+                    $scope.sumamount = res.data.map(res => res.SUMAMOUNT);
+                    $scope.sumbalance = res.data.map(res => res.SUMBALANCE);
                     $scope.chartdebtstddistyear();
                 },
                 function (error) {
@@ -316,6 +288,180 @@ angular.module('app')
             )
         }
 
+        $scope.getdeptscholardisttype = function () {
+            $http({
+                url: 'http://app.rmutp.ac.th/api/bi/std/deptscholardisttype',
+                method: 'GET',
+            }).then(
+                function (res) {
+                    $scope.datachartsSTD = res.data;
+                    $scope.stdtype = res.data.map(res => res.TYPE);
+                    $scope.stdtotalscholar = res.data.map(res => res.COUNTS);
+                    $scope.sumtotalscholar = res.data.map(res => res.SUMBALANCE);
+                    $scope.sumyear = res.data.map(res => res.ACADYEAR);
+                    $scope.chartdeptscholardisttype();
+                },
+                function (error) {
+                    console.log(error);
+                }
+            )
+        } // จำนวนผู้รับทุน กยศ.กรอ และจำนวนเงินที่ได้รับ
+
+        $scope.getdeptscholarrmutpdisttype59 = function () {
+            $http({
+                url: 'http://app.rmutp.ac.th/api/bi/std/deptscholarrmutpdisttype59',
+                method: 'GET',
+            }).then(
+                function (res) {
+                    $scope.datachartsSTD = res.data;
+                    $scope.stdtype = res.data.map(res => res.SCHOLAR);
+                    $scope.stdtotalscholarrmutp59 = res.data.map(res => res.COUNTS);
+                    $scope.sumtotalscholarrmutp59 = res.data.map(res => res.SUMBALANCE);
+                    $scope.sumyear = res.data.map(res => res.ACADYEAR);
+                    $scope.chartdeptscholarrmutpdisttype();
+
+                    console.log($scope.sumtotalscholarrmutp59);
+
+                },
+                function (error) {
+                    console.log(error);
+                }
+            )
+        } // จำนวนผู้รับทุนราชมงคล และจำนวนเงินที่ได้รับ
+
+        $scope.getdeptscholarrmutpdisttype60 = function () {
+            $http({
+                url: 'http://app.rmutp.ac.th/api/bi/std/deptscholarrmutpdisttype60',
+                method: 'GET',
+            }).then(
+                function (res) {
+                    $scope.datachartsSTD = res.data;
+                    $scope.stdtype = res.data.map(res => res.SCHOLAR);
+                    $scope.stdtotalscholarrmutp60 = res.data.map(res => res.COUNTS);
+                    $scope.sumtotalscholarrmutp60 = res.data.map(res => res.SUMBALANCE);
+                    $scope.sumyear = res.data.map(res => res.ACADYEAR);
+                    $scope.chartdeptscholarrmutpdisttype();
+
+                    console.log($scope.sumtotalscholarrmutp60);
+                },
+                function (error) {
+                    console.log(error);
+                }
+            )
+        }
+
+        $scope.getdeptscholarrmutpdisttype61 = function () {
+            $http({
+                url: 'http://app.rmutp.ac.th/api/bi/std/deptscholarrmutpdisttype61',
+                method: 'GET',
+            }).then(
+                function (res) {
+                    $scope.datachartsSTD = res.data;
+                    $scope.stdtype = res.data.map(res => res.SCHOLAR);
+                    $scope.stdtotalscholarrmutp61 = res.data.map(res => res.COUNTS);
+                    $scope.sumtotalscholarrmutp61 = res.data.map(res => res.SUMBALANCE);
+                    $scope.sumyear = res.data.map(res => res.ACADYEAR);
+                    $scope.chartdeptscholarrmutpdisttype();
+                },
+                function (error) {
+                    console.log(error);
+                }
+            )
+        }
+
+        $scope.getdeptscholarrmutpdisttype62 = function () {
+            $http({
+                url: 'http://app.rmutp.ac.th/api/bi/std/deptscholarrmutpdisttype62',
+                method: 'GET',
+            }).then(
+                function (res) {
+                    $scope.datachartsSTD = res.data;
+                    $scope.stdtype = res.data.map(res => res.SCHOLAR);
+                    $scope.stdtotalscholarrmutp62 = res.data.map(res => res.COUNTS);
+                    $scope.sumtotalscholarrmutp62 = res.data.map(res => res.SUMBALANCE);
+                    $scope.sumyear = res.data.map(res => res.ACADYEAR);
+                    $scope.chartdeptscholarrmutpdisttype();
+                },
+                function (error) {
+                    console.log(error);
+                }
+            )
+        }
+
+        $scope.getdeptscholaretcdisttype = function () {
+            $http({
+                url: 'http://app.rmutp.ac.th/api/bi/std/deptscholaretcdisttype',
+                method: 'GET',
+            }).then(
+                function (res) {
+                    $scope.datachartsSTD = res.data;
+                    $scope.stdtype = res.data.map(res => res.TYPE);
+                    $scope.stdtotalscholaretc = res.data.map(res => res.Count_STUDENTID);
+                    $scope.sumtotalscholaretc = res.data.map(res => res.sum_balance);
+                    $scope.sumyear = res.data.map(res => res.ACADYEAR);
+                    $scope.chartdeptscholardisttype();
+                },
+                function (error) {
+                    console.log(error);
+                }
+            )
+        }
+
+        $scope.getstudentdistyear1 = function () {
+            $http({
+                url: 'http://app.rmutp.ac.th/api/bi/std/studentdistyear',
+                method: 'GET',
+            }).then(
+                function (res) {
+                    $scope.datachartsSTD = res.data;
+                    $scope.stdtotal1 = res.data.map(res => res.COUNTSTD);
+                    $scope.termstd1 = res.data.map(res => res.SEMESTER);
+                    $scope.stdyear1 = res.data.map(res => res.ACADYEAR);
+                    $scope.chartstudentdistyear();
+                },
+                function (error) {
+                    console.log(error);
+                }
+            )
+        }
+
+        $scope.getstudentdistyear2 = function () {
+            $http({
+                url: 'http://app.rmutp.ac.th/api/bi/std/studentdistyear2',
+                method: 'GET',
+            }).then(
+                function (res) {
+                    $scope.datachartsSTD = res.data;
+                    $scope.stdtotal2 = res.data.map(res => res.COUNTSTD);
+                    $scope.termstd2 = res.data.map(res => res.SEMESTER);
+                    $scope.stdyear2 = res.data.map(res => res.ACADYEAR);
+                    $scope.chartstudentdistyear();
+                },
+                function (error) {
+                    console.log(error);
+                }
+            )
+        }
+
+        $scope.getstudentdistyear3 = function () {
+            $http({
+                url: 'http://app.rmutp.ac.th/api/bi/std/studentdistyear3',
+                method: 'GET',
+            }).then(
+                function (res) {
+                    $scope.datachartsSTD = res.data;
+                    $scope.stdtotal3 = res.data.map(res => res.COUNTSTD);
+                    $scope.termstd3 = res.data.map(res => res.SEMESTER);
+                    $scope.stdyear3 = res.data.map(res => res.ACADYEAR);
+                    $scope.chartstudentdistyear();
+                },
+                function (error) {
+                    console.log(error);
+                }
+            )
+        }
+
+
 
 
         //PLOTCHARTS
@@ -328,90 +474,24 @@ angular.module('app')
                         label: "จำนวนผู้สมัครนักศึกษา",
                         data: $scope.totals,
                         borderColor: "#652d91",
-                        backgroundColor: "#9370DB"
+                        backgroundColor: "rgb(168,140,226,0.8)"
                     }]
                 },
                 options: {
-                    legend: {
-                        display: true
-                    },
-                    title: {
-                        display: false,
-                        text: 'จำนวนการสมัครนักศึกษา'
-                    }
-                }
-            });
-        }
-
-        $scope.chartstddistyeartype = function () {
-            new Chart(document.getElementById("chartstddistyeartype"), {
-                type: 'line',
-                data: {
-                    labels: $scope.lbnamenormal,
-                    datasets: [{
-                            label: "จำนวนนักศึกษา (ปกติ)",
-                            data: $scope.totalsnormal,
-                            borderColor: "#3e95cd",
-                            fill: false
-                        },
-                        {
-                            label: "จำนวนนักศึกษา (ลาพักการศึกษา)",
-                            data: $scope.totalstakeleave,
-                            borderColor: "#8e5ea2",
-                            fill: false
-                        },
-                        {
-                            label: "จำนวนนักศึกษา (ลาออก)",
-                            data: $scope.totalsresign,
-                            borderColor: "#e8c3b9",
-                            fill: false
-                        }, {
-                            label: "จำนวนนักศึกษา (พ้นสภาพ)",
-                            data: $scope.totalsdislodge,
-                            borderColor: "#c45850",
-                            fill: false
+                    plugins: {
+                        datalabels: {
+                            anchor: 'end',
+                            color: 'black',
+                            labels: {
+                                title: {
+                                    font: {
+                                        weight: 'bold'
+                                    }
+                                },
+                            },
+                            align: 'start'
                         }
-                    ]
-                },
-                options: {
-                    legend: {
-                        display: true
                     },
-                    title: {
-                        display: false,
-                        text: 'จำนวนการสมัครนักศึกษา'
-                    }
-                }
-            });
-        }
-
-        $scope.chartstdsocialsciencedistyear = function () {
-            new Chart(document.getElementById("chartstdsocialsciencedistyear"), {
-                type: 'line',
-                data: {
-                    labels: $scope.lbnamesocial,
-                    datasets: [{
-                            label: "นักศึกษา (สายวิทยาศาสตร์)",
-                            data: $scope.totalssocial,
-                            borderColor: "#3e95cd",
-                            fill: false
-                        },
-                        {
-                            label: "นักศึกษา (สายสังคม)",
-                            data: $scope.totalsscience,
-                            borderColor: "#8e5ea2",
-                            fill: false
-                        },
-                    ]
-                },
-                options: {
-                    legend: {
-                        display: true
-                    },
-                    title: {
-                        display: false,
-                        text: 'จำนวนการสมัครนักศึกษา'
-                    }
                 }
             });
         }
@@ -424,63 +504,34 @@ angular.module('app')
                     datasets: [{
                             label: "เทอม1",
                             data: $scope.totalsadviser1,
-                            borderColor: "#3e95cd",
+                            // borderColor: "#3e95cd",
                             fill: false
                         },
                         {
                             label: "เทอม2",
                             data: $scope.totalsadviser2,
-                            borderColor: "#8e5ea2",
+                            // borderColor: "#8e5ea2",
                             fill: false
                         },
                         {
                             label: "เทอม3",
                             data: $scope.totalsadviser3,
-                            borderColor: "#8e5ea2",
+                            // borderColor: "#8e5ea2",
                             fill: false
                         },
                     ]
                 },
                 options: {
-                    legend: {
-                        display: true
+                    plugins: {
+                        colorschemes: {
+                            scheme: 'brewer.SetOne8'
+                        },
+                        datalabels: {
+                            anchor: 'start',
+                            color: 'black',
+                            align: 'end',
+                        }
                     },
-                }
-            });
-        }
-
-        $scope.chartscholardistyear = function () {
-            new Chart(document.getElementById("chartscholardistyear"), {
-                type: 'bar',
-                data: {
-                    labels: $scope.lbnamescholar59,
-                    datasets: [{
-                            label: "ปีการศึกษา 2559",
-                            data: $scope.totalsscholar59,
-                            borderColor: "#3e95cd",
-                            fill: false
-                        },
-                        {
-                            label: "ปีการศึกษา 2560",
-                            data: $scope.totalsscholar60,
-                            borderColor: "#8e5ea2",
-                            fill: false
-                        },
-                        {
-                            label: "ปีการศึกษา 2561",
-                            data: $scope.totalsscholar61,
-                            borderColor: "#8e5ea2",
-                            fill: false
-                        },
-                        {
-                            label: "ปีการศึกษา 2562",
-                            data: $scope.totalsscholar62,
-                            borderColor: "#8e5ea2",
-                            fill: false
-                        },
-                    ]
-                },
-                options: {
                     legend: {
                         display: true
                     },
@@ -492,30 +543,69 @@ angular.module('app')
             new Chart(document.getElementById("chartdebtstddistyear"), {
                 type: 'bar',
                 data: {
-                    labels: $scope.lbnamesdebtdislodge,
+                    labels: $scope.lbnamesdebt,
                     datasets: [{
-                            label: "นักศึกษา (พ้นสภาพ)",
-                            data: $scope.totalsdebtdislodge,
-                            borderColor: "#3e95cd",
-                            fill: false
+                            label: "เงินลงทะเบียนทั้งสิ้น",
+                            data: $scope.sumamount,
+                            backgroundColor: "rgb(178,255,102,0.8)",
+                            borderColor: "#B2FF66",
+                            // fill: false
                         },
                         {
-                            label: "นักศึกษา (ลาออก)",
-                            data: $scope.totalsdebtresign,
-                            borderColor: "#3e95cd",
-                            fill: false
-                        },
-                        {
-                            label: "นักศึกษา (ปกติ)",
-                            data: $scope.totalsdebtnormal,
-                            borderColor: "#3e95cd",
-                            fill: false
+                            label: "ค้างชำระ",
+                            data: $scope.sumbalance,
+                            backgroundColor: "rgb(255,0,0,0.5)",
+                            borderColor: "#CC0000",
+                            // fill: false
                         },
                     ]
                 },
                 options: {
-                    legend: {
-                        display: true
+                    plugins: {
+                        datalabels: {
+                            formatter: function (value) {
+                                return commaify(value);
+                                // return '$' + commaify(value);
+                            },
+                            anchor: 'end',
+                            color: 'black',
+                            align: 'start',
+                            labels: {
+                                title: {
+                                    font: {
+                                        weight: 'bold'
+                                    }
+                                },
+                            },
+                        }
+                    },
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true,
+                                callback: function (value) {
+                                    var ranges = [{
+                                            divider: 1e6,
+                                            suffix: 'M'
+                                        },
+                                        {
+                                            divider: 1e3,
+                                            suffix: 'k'
+                                        }
+                                    ];
+
+                                    function formatNumber(n) {
+                                        for (var i = 0; i < ranges.length; i++) {
+                                            if (n >= ranges[i].divider) {
+                                                return (n / ranges[i].divider).toString() + ranges[i].suffix;
+                                            }
+                                        }
+                                        return n;
+                                    }
+                                    return formatNumber(value);
+                                }
+                            }
+                        }]
                     },
                 }
             });
@@ -523,43 +613,272 @@ angular.module('app')
 
         $scope.chartcoursesdistsciencesocial = function () {
             new Chart(document.getElementById("chartcoursesdistsciencesocial"), {
-                type: 'bar',
+                type: 'doughnut',
                 data: {
                     labels: $scope.lbnamecourse,
                     datasets: [{
                         label: "ภาควิชา",
                         data: $scope.totalscourse,
-                        borderColor: "#3e95cd",
-                        fill: false
+                        backgroundColor: ["#5b9dc2", "#fff100", "#3381d8"],
+                        // fill: false
                     }, ]
                 },
                 options: {
-                    legend: {
-                        display: true
+                    plugins: {
+                        datalabels: {
+                            anchor: 'center',
+                            color: 'black',
+                            align: 'center',
+                            formatter: (value, ctx) => {
+                                let sum = 0;
+                                let dataArr = ctx.chart.data.datasets[0].data;
+                                dataArr.map(data => {
+                                    sum += data;
+                                });
+                                let percentage = (value * 100 / sum).toFixed(0) + "%";
+                                return percentage;
+                            },
+                        }
+                    },
+                    // legend: {
+                    //     display: false
+                    // },
+                }
+            });
+        }
+
+        $scope.chartdeptscholardisttype = function () {
+            new Chart(document.getElementById("chartdeptscholardisttype"), {
+                type: 'bar',
+                data: {
+                    labels: $scope.sumyear,
+                    datasets: [{
+                            label: "จำนวนผู้รับทุน",
+                            data: $scope.stdtotalscholar,
+                            backgroundColor: "rgba(178, 102, 255, 0.6)",
+                            fill: false,
+                            yAxisID: 'yr',
+                        },
+                        {
+                            type: 'line',
+                            label: "จำนวนเงิน",
+                            data: $scope.sumtotalscholar,
+                            borderColor: "#99FF33",
+                            backgroundColor: "B2FF66",
+                            fill: false,
+                            yAxisID: 'yl',
+                        },
+
+                    ],
+                },
+                options: {
+                    plugins: {
+                        datalabels: {
+                            formatter: function (value) {
+                                return commaify(value);
+                                // return '$' + commaify(value);
+                            },
+                            anchor: 'end',
+                            color: 'black',
+                            align: 'end',
+                        }
+                    },
+                    scales: {
+                        yAxes: [{
+                                stacked: true,
+                                position: "left",
+                                id: "yr",
+                                ticks: {
+                                    // min: 0,
+                                    // max: 8000,
+                                    stepSize: 500
+                                },
+                            },
+
+                            {
+                                stacked: false,
+                                position: "right",
+                                id: "yl",
+                                ticks: {
+                                    callback: function (value) {
+                                        var ranges = [{
+                                                divider: 1e6,
+                                                suffix: 'M'
+                                            },
+                                            {
+                                                divider: 1e3,
+                                                suffix: 'k'
+                                            }
+                                        ];
+
+                                        function formatNumber(n) {
+                                            for (var i = 0; i < ranges.length; i++) {
+                                                if (n >= ranges[i].divider) {
+                                                    return (n / ranges[i].divider).toString() + ranges[i].suffix;
+                                                }
+                                            }
+                                            return n;
+                                        }
+                                        return formatNumber(value);
+                                    }
+                                },
+                            },
+
+                        ],
+                    }
+                }
+            });
+        }
+
+        $scope.chartdeptscholarrmutpdisttype = function () {
+            new Chart(document.getElementById("chartdeptscholarrmutpdisttype"), {
+                type: 'bar',
+                data: {
+                    labels: $scope.stdtype,
+                    datasets: [{
+                            label: 'ปีการศึกษา 2560',
+                            backgroundColor: '#FF66B2',
+                            data: $scope.sumtotalscholarrmutp60,
+                        }, {
+                            label: 'ปีการศึกษา 2561',
+                            backgroundColor: '#1E90FF',
+                            data: $scope.sumtotalscholarrmutp61,
+                        },
+                        {
+                            label: 'ปีการศึกษา 2562',
+                            backgroundColor: '#00CED1',
+                            data: $scope.sumtotalscholarrmutp62,
+                        },
+                    ]
+                },
+                options: {
+                    tooltips: {
+                        mode: 'index',
+                        intersect: false,
+                        callbacks: {
+                            label: function (tooltipItem, data) {
+                                var label = data.datasets[tooltipItem.datasetIndex].label;
+                                data.datasets[tooltipItem.datasetIndex].label;
+                                return label + ' ' + tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท";
+                            },
+                            // label: function (tooltipItem, data, ) {
+                            //     console.log(tooltipItem);
+                            //     console.log(data);
+                            //     return tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท";
+                            // },
+                        },
+                    },
+                    responsive: true,
+                    scales: {
+                        xAxes: [{
+                            stacked: true,
+                        }],
+                        yAxes: [{
+                            stacked: true,
+                            ticks: {
+                                beginAtZero: true,
+                                callback: function (value) {
+                                    var ranges = [{
+                                            divider: 1e6,
+                                            suffix: 'M'
+                                        },
+                                        {
+                                            divider: 1e3,
+                                            suffix: 'k'
+                                        }
+                                    ];
+
+                                    function formatNumber(n) {
+                                        for (var i = 0; i < ranges.length; i++) {
+                                            if (n >= ranges[i].divider) {
+                                                return (n / ranges[i].divider).toString() + ranges[i].suffix;
+                                            }
+                                        }
+                                        return n;
+                                    }
+                                    return formatNumber(value);
+                                }
+                            }
+                        }]
+                    },
+                    plugins: {
+                        datalabels: {
+                            formatter: function (value) {
+                                return commaify(value);
+                                // return '$' + commaify(value);
+                            },
+                            anchor: 'start',
+                            color: 'black',
+                            align: 'end',
+                            display: false,
+                        }
+                    },
+                }
+            });
+        }
+
+        $scope.chartstudentdistyear = function () {
+            new Chart(document.getElementById("chartstudentdistyear"), {
+                type: 'bar',
+                data: {
+                    labels: $scope.stdyear1,
+                    datasets: [{
+                            label: "เทอม 1",
+                            data: $scope.stdtotal1,
+                            borderColor: "#3e95cd",
+                            fill: false
+                        },
+                        {
+                            label: "เทอม 2",
+                            data: $scope.stdtotal2,
+                            // borderColor: "#c45850",
+                            fill: false
+                        },
+                        {
+                            label: "เทอม 3",
+                            data: $scope.stdtotal3,
+                            // borderColor: "#c45850",
+                            fill: false
+                        }
+                    ]
+                },
+                options: {
+                    plugins: {
+                        datalabels: {
+                            anchor: 'end',
+                            color: 'black',
+                            align: 'start',
+                            labels: {
+                                title: {
+                                    font: {
+                                        weight: 'bold'
+                                    }
+                                },
+                            },
+                        }
                     },
                 }
             });
         }
 
 
+        // execute
         $scope.getacademicEmployeeEducation();
-        $scope.getstdnormaldisttypeyear();
-        $scope.getstdtakeleavedisttypeyear();
-        $scope.chartstddistyeartype();
-        $scope.getstdresigndisttypeyear();
-        $scope.getstddislodgedisttypeyear();
-        $scope.getstdsocialdistyear();
-        $scope.getstdsciencedistyear();
         $scope.getadviserdistyearterm1();
         $scope.getadviserdistyearterm2();
         $scope.getadviserdistyearterm3();
-        $scope.getscholardistyear59();
-        $scope.getscholardistyear60();
-        $scope.getscholardistyear61();
-        $scope.getscholardistyear62();
         $scope.getdebtstddislodgedistyear();
         $scope.getdebtstdresigndistyear();
         $scope.getdebtstdnormaldistyear();
         $scope.getcoursesdistsciencesocial();
+        $scope.getdeptscholardisttype();
+        $scope.getdeptscholarrmutpdisttype59();
+        $scope.getdeptscholarrmutpdisttype60();
+        $scope.getdeptscholarrmutpdisttype61();
+        $scope.getdeptscholarrmutpdisttype62();
+        // $scope.getdeptscholaretcdisttype
+        $scope.getstudentdistyear1();
+        $scope.getstudentdistyear2();
+        $scope.getstudentdistyear3();
 
     })

@@ -2,7 +2,6 @@ angular.module('app')
 
     .controller('StatsCtrl', function ($scope, $rootScope, $http, $state) {
 
-        $rootScope.pageTitle = 'BI Jub Jub'
 
         $scope.datachartsEmptype = [];
         $scope.datachartsEmpedu = [];
@@ -25,40 +24,6 @@ angular.module('app')
             )
         } //ประเภทบุคลากร
 
-        $scope.getteacheratworkdisttype = function () {
-            $http({
-                url: 'http://app.rmutp.ac.th/api/bi/hrm/teacheratworkdisttype',
-                method: 'GET',
-            }).then(
-                function (res) {
-                    $scope.datachartsEmptype = res.data;
-                    $scope.lables = res.data.map(res => res.el_name);
-                    $scope.totals = res.data.map(res => res.expert_num);
-                    $scope.chartteacheratworkdisttype();
-                },
-                function (error) {
-                    console.log(error);
-                }
-            )
-        } //จำนวนอาจารย์ สายวิชาการ แยกตามตำแหน่ง  ที่ปฏิบัติงานอยู่ปัจจุบัน
-
-        $scope.getstaffsupportlinepositiondist = function () {
-            $http({
-                url: 'http://app.rmutp.ac.th/api/bi/hrm/staffsupportlinepositiondist',
-                method: 'GET',
-            }).then(
-                function (res) {
-                    $scope.datachartsEmptype = res.data;
-                    $scope.lables = res.data.map(res => res.el_name);
-                    $scope.totals = res.data.map(res => res.expert_num);
-                    $scope.chartstaffsupportlinepositiondist();
-                },
-                function (error) {
-                    console.log(error);
-                }
-            )
-        } //จำนวน บุคลากรสายสนับสนุน แยกตาม ปฏิบัติการ, ชำนาญการ, ชำนาญการพิเศษ
-
         $scope.getappointedexecutive62 = function () {
             $http({
                 url: 'http://app.rmutp.ac.th/api/bi/hrm/appointedexecutive62',
@@ -76,6 +41,57 @@ angular.module('app')
             )
         } // จำนวนผู้บริหารแบบแต่งตั้ง (ขาดข้อมูลหัวหน้างานในสายสนับสนุน)
 
+        $scope.getstaffworkdistfaculty = function () {
+            $http({
+                url: 'http://app.rmutp.ac.th/api/bi/hrm/staffworkdistfaculty',
+                method: 'GET',
+            }).then(
+                function (res) {
+                    $scope.datachartsEmptype = res.data;
+                    $scope.lables = res.data.map(res => res.dept_name_th);
+                    $scope.totals = res.data.map(res => res.num);
+                    $scope.chartstaffworkdistfaculty();
+                },
+                function (error) {
+                    console.log(error);
+                }
+            )
+        } //จำนวนบุคลากร จำแนกตามหน่วยงาน ปีปัจจุบัน (คณะ)
+
+        $scope.getstaffworkdistinstitute = function () {
+            $http({
+                url: 'http://app.rmutp.ac.th/api/bi/hrm/staffworkdistinstitute',
+                method: 'GET',
+            }).then(
+                function (res) {
+                    $scope.datachartsEmptype = res.data;
+                    $scope.lables = res.data.map(res => res.dept_name_th);
+                    $scope.totals = res.data.map(res => res.num);
+                    $scope.chartstaffworkdistinstitute();
+                },
+                function (error) {
+                    console.log(error);
+                }
+            )
+        } //จำนวนบุคลากร จำแนกตามหน่วยงาน ปีปัจจุบัน (สำนักสถาบัน)
+
+        $scope.getstaffworkdistdivision = function () {
+            $http({
+                url: 'http://app.rmutp.ac.th/api/bi/hrm/staffworkdistdivision',
+                method: 'GET',
+            }).then(
+                function (res) {
+                    $scope.datachartsEmptype = res.data;
+                    $scope.lables = res.data.map(res => res.dept_name_th);
+                    $scope.totals = res.data.map(res => res.num);
+                    $scope.chartstaffworkdistdivision();
+                },
+                function (error) {
+                    console.log(error);
+                }
+            )
+        } //จำนวนบุคลากร จำแนกตามหน่วยงาน ปีปัจจุบัน (กอง)
+
 
         // PLOTCHARTS
 
@@ -86,18 +102,33 @@ angular.module('app')
                     labels: $scope.lables,
                     datasets: [{
                         label: "บุคลากรแบ่งแยกตามประเภท",
-                        backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                        // backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
                         data: $scope.totals
                     }]
                 },
                 options: {
                     plugins: {
-                        labels: {
-                            render: 'percentage',
-                            precision: 1,
-                            position: 'border',
-                            fontColor: '#fff',
-                            fontSize: 13,
+                        colorschemes: {
+                            scheme: 'brewer.SetThree6'
+                        },
+                        datalabels: {
+                            color: 'black',
+                            labels: {
+                                title: {
+                                    font: {
+                                        fontSize: 13,
+                                    }
+                                },
+                            },
+                            formatter: (value, ctx) => {
+                                let sum = 0;
+                                let dataArr = ctx.chart.data.datasets[0].data;
+                                dataArr.map(data => {
+                                    sum += data;
+                                });
+                                let percentage = (value * 100 / sum).toFixed(1) + "%";
+                                return percentage;
+                            },
                         },
                     },
                     legend: {
@@ -122,90 +153,136 @@ angular.module('app')
                 data: {
                     labels: $scope.lables,
                     datasets: [{
-                        label: "บุคลากรแบ่งแยกตามประเภท",
-                        backgroundColor: ["#3e95cd"],
-                        data: $scope.totals
+                        label: "ผู้บริหารที่มาจากการสรรหา",
+                        data: $scope.totals,
+                        backgroundColor: '#ff9b83',
+                        fill: false,
                     }]
                 },
                 options: {
                     plugins: {
-                        labels: {
-                            render: 'value',
-                            position: 'border',
-
-                            fontSize: 13,
+                        colorschemes: {
+                            scheme: 'brewer.Paired12'
                         },
+                        datalabels: {
+                            anchor: 'end',
+                            align: 'end',
+                            color: 'black',
+                            labels: {
+                                title: {
+                                    font: {
+                                        weight: 'bold'
+                                    }
+                                },
+                            },
+                        }
                     },
-                    legend: {
-                        display: true
-                    },
-                    title: {
-                        display: false,
-                        text: 'บุคลากรแบ่งแยกตามประเภท'
-                    }
                 }
             });
         }
 
-        $scope.chartteacheratworkdisttype = function () {
-            new Chart(document.getElementById("chartteacheratworkdisttype"), {
-                type: 'doughnut',
+        $scope.chartstaffworkdistfaculty = function () {
+            new Chart(document.getElementById("chartstaffworkdistfaculty"), {
+                type: 'bar',
                 data: {
                     labels: $scope.lables,
                     datasets: [{
-                        label: "บุคลากรแบ่งแยกตามประเภท",
-                        backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
-                        data: $scope.totals
+                        label: "บุคลากรจำแนกตามคณะ",
+                        data: $scope.totals,
+                        backgroundColor: '#976393',
+                        fill: false,
                     }]
                 },
                 options: {
                     plugins: {
-                        labels: {
-                            render: 'percentage',
-                            precision: 1,
-                            position: 'border',
-                            fontColor: '#fff',
-                            fontSize: 13,
-                        },
+                        datalabels: {
+                            anchor: 'end',
+                            align: 'end',
+                            color: 'black',
+                            labels: {
+                                title: {
+                                    font: {
+                                        weight: 'bold'
+                                    }
+                                },
+                            },
+                        }
                     },
                 }
             });
         }
 
-        $scope.chartstaffsupportlinepositiondist = function () {
-            new Chart(document.getElementById("chartstaffsupportlinepositiondist"), {
-                type: 'doughnut',
+        $scope.chartstaffworkdistinstitute = function () {
+            new Chart(document.getElementById("chartstaffworkdistinstitute"), {
+                type: 'bar',
                 data: {
                     labels: $scope.lables,
                     datasets: [{
-                        label: "บุคลากรแบ่งแยกตามประเภท",
-                        backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
-                        data: $scope.totals
+                        label: "บุคลากรจำแนกตาม สำนัก สถาบัน",
+                        data: $scope.totals,
+                        backgroundColor: '#FFFF00',
+                        // fill: false,
                     }]
                 },
                 options: {
                     plugins: {
-                        labels: {
-                            render: 'percentage',
-                            precision: 1,
-                            position: 'border',
-                            fontColor: '#fff',
-                            fontSize: 13,
-                        },
-                    },
-                    legend: {
-                        display: true
+                        datalabels: {
+                            anchor: 'end',
+                            align: 'end',
+                            color: 'black',
+                            labels: {
+                                title: {
+                                    font: {
+                                        weight: 'bold'
+                                    }
+                                },
+                            },
+                        }
                     },
                 }
             });
         }
+
+        $scope.chartstaffworkdistdivision = function () {
+            new Chart(document.getElementById("chartstaffworkdistdivision"), {
+                type: 'bar',
+                data: {
+                    labels: $scope.lables,
+                    datasets: [{
+                        label: "บุคลากรจำแนกตาม กอง",
+                        data: $scope.totals,
+                        backgroundColor: '#97ebdb',
+                        fill: false,
+                    }]
+                },
+                options: {
+                    plugins: {
+                        datalabels: {
+                            anchor: 'end',
+                            align: 'end',
+                            color: 'black',
+                            labels: {
+                                title: {
+                                    font: {
+                                        weight: 'bold'
+                                    }
+                                },
+                            },
+                        }
+                    },
+                }
+            });
+        }
+
+
 
 
         //EXECUTE
         $scope.getdataemptype();
-        $scope.getteacheratworkdisttype();
-        $scope.getstaffsupportlinepositiondist();
         $scope.getappointedexecutive62();
+        $scope.getstaffworkdistfaculty();
+        $scope.getstaffworkdistinstitute();
+        $scope.getstaffworkdistdivision();
 
 
     })

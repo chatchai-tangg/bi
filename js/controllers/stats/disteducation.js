@@ -2,8 +2,6 @@ angular.module('app')
 
     .controller('StatdisteducationCtrl', function ($scope, $rootScope, $http, $state) {
 
-        $rootScope.pageTitle = 'BI Jub Jub';
-
 
         //GETDATA
         $scope.getacademicEmployeeEducation = function () {
@@ -54,6 +52,11 @@ angular.module('app')
                     }]
                 },
                 options: {
+                    plugins: {
+                        datalabels: {
+                            color: 'white'
+                        }
+                    },
                     legend: {
                         display: true
                     },
@@ -72,11 +75,23 @@ angular.module('app')
                     labels: $scope.dlname,
                     datasets: [{
                         label: "บุคลากรแบ่งแยกตามประเภท",
-                        backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                        backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850", "#b7ded2", "#f6a6b2", "#f7c297"],
                         data: $scope.degreetotals
                     }]
                 },
                 options: {
+                    plugins: {
+                        datalabels: {
+                            color: 'black',
+                            labels: {
+                                title: {
+                                    font: {
+                                        weight: 'bold'
+                                    }
+                                },
+                            },
+                        }
+                    },
                     legend: {
                         display: true
                     },
