@@ -6,7 +6,7 @@ angular.module('app')
 
         $scope.getteacheratworkdisttype = function () {
             $http({
-                url: 'http://app.rmutp.ac.th/api/bi/hrm/teacheratworkdisttype',
+                url: 'https://app.rmutp.ac.th/api/bi/hrm/teacheratworkdisttype',
                 method: 'GET',
             }).then(
                 function (res) {
@@ -23,7 +23,7 @@ angular.module('app')
 
         $scope.getstaffsupportlinepositiondist = function () {
             $http({
-                url: 'http://app.rmutp.ac.th/api/bi/hrm/staffsupportlinepositiondist',
+                url: 'https://app.rmutp.ac.th/api/bi/hrm/staffsupportlinepositiondist',
                 method: 'GET',
             }).then(
                 function (res) {
@@ -40,7 +40,7 @@ angular.module('app')
 
         $scope.getacademicEmployeeEducation = function () {
             $http({
-                url: 'http://app.rmutp.ac.th/api/bi/hrm/academicEmployeeEducation',
+                url: 'https://app.rmutp.ac.th/api/bi/hrm/academicEmployeeEducation',
                 method: 'GET',
             }).then(
                 function (res) {
@@ -57,7 +57,7 @@ angular.module('app')
 
         $scope.getacademicEmployeeSupport = function () {
             $http({
-                url: 'http://app.rmutp.ac.th/api/bi/hrm/academicEmployeeSupport',
+                url: 'https://app.rmutp.ac.th/api/bi/hrm/academicEmployeeSupport',
                 method: 'GET',
             }).then(
                 function (res) {

@@ -9,7 +9,7 @@ angular.module('app')
         // GETDATA
         $scope.getdataemptype = function () {
             $http({
-                url: 'http://app.rmutp.ac.th/api/bi/hrm/Employeetype',
+                url: 'https://app.rmutp.ac.th/api/bi/hrm/Employeetype',
                 method: 'GET',
             }).then(
                 function (res) {
@@ -26,7 +26,7 @@ angular.module('app')
 
         $scope.getappointedexecutive62 = function () {
             $http({
-                url: 'http://app.rmutp.ac.th/api/bi/hrm/appointedexecutive62',
+                url: 'https://app.rmutp.ac.th/api/bi/hrm/appointedexecutive62',
                 method: 'GET',
             }).then(
                 function (res) {
@@ -43,7 +43,7 @@ angular.module('app')
 
         $scope.getstaffworkdistfaculty = function () {
             $http({
-                url: 'http://app.rmutp.ac.th/api/bi/hrm/staffworkdistfaculty',
+                url: 'https://app.rmutp.ac.th/api/bi/hrm/staffworkdistfaculty',
                 method: 'GET',
             }).then(
                 function (res) {
@@ -60,7 +60,7 @@ angular.module('app')
 
         $scope.getstaffworkdistinstitute = function () {
             $http({
-                url: 'http://app.rmutp.ac.th/api/bi/hrm/staffworkdistinstitute',
+                url: 'https://app.rmutp.ac.th/api/bi/hrm/staffworkdistinstitute',
                 method: 'GET',
             }).then(
                 function (res) {
@@ -77,7 +77,7 @@ angular.module('app')
 
         $scope.getstaffworkdistdivision = function () {
             $http({
-                url: 'http://app.rmutp.ac.th/api/bi/hrm/staffworkdistdivision',
+                url: 'https://app.rmutp.ac.th/api/bi/hrm/staffworkdistdivision',
                 method: 'GET',
             }).then(
                 function (res) {

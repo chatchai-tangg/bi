@@ -1,23 +1,8 @@
-angular.module('app', ['ui.router', 'ngMaterial', 'ngMessages', 'ngAnimate', 'ngSanitize', 'LocalStorageModule'])
+angular.module('app', ['ui.router', 'ngMaterial', 'ngMessages', 'ngAnimate', 'ngSanitize', 'LocalStorageModule', 'md.data.table'])
 
-    .config(function (localStorageServiceProvider, $stateProvider, $urlRouterProvider, $mdThemingProvider, $mdDateLocaleProvider) {
+    .config(function (localStorageServiceProvider, $stateProvider, $urlRouterProvider) {
 
         localStorageServiceProvider.setPrefix('edoc3');
-
-        $mdThemingProvider.theme('default')
-            .primaryPalette('deep-purple')
-            .accentPalette('deep-orange');
-
-        $mdThemingProvider.theme('sidenav')
-            .primaryPalette('deep-purple', {
-                'default': '700'
-            })
-            .dark();
-
-        $mdThemingProvider.theme('toolbar')
-            .primaryPalette('grey', {
-                'default': '200'
-            });
 
         $stateProvider
             .state('login', {
@@ -35,40 +20,19 @@ angular.module('app', ['ui.router', 'ngMaterial', 'ngMessages', 'ngAnimate', 'ng
                 url: '/edoc',
                 templateUrl: 'views/edoc/edoc.html',
                 controller: 'EdocCtrl',
-                redirectTo: 'main.edoc.inbox',
-            })
-            .state('main.edoc.inbox', {
-                url: '/inbox',
-                templateUrl: 'views/edoc/edoc.inbox.html',
-                controller: 'EdocInboxCtrl',
-            })
-            .state('main.edoc.create', {
-                url: '/create',
-                templateUrl: 'views/edoc/edoc.create.html',
-                controller: 'EdocCreateCtrl',
             })
             // emeeting
             .state('main.emeeting', {
                 url: '/emeeting',
                 templateUrl: 'views/emeeting/emeeting.html',
                 controller: 'EmeetingCtrl',
-                redirectTo: 'main.emeeting.mymeeting',
             })
-            .state('main.emeeting.mymeeting', {
-                url: '/mymeeting',
-                templateUrl: 'views/emeeting/emeeting.mymeeting.html',
-            })
-            .state('main.emeeting.all', {
-                url: '/all',
-                templateUrl: 'views/emeeting/emeeting.all.html',
-            })
-
             //BI
             .state('main.mainstats', {
                 url: '/mainstats',
                 controller: 'MenuCtrl',
                 templateUrl: 'views/stats/mainstats.html',
-                redirectTo: 'main.mainstats.stafftype',
+                redirectTo: 'main.mainstats.stdplan',
             })
             .state('main.mainstats.stafftype', {
                 url: '/stafftype',
@@ -95,7 +59,31 @@ angular.module('app', ['ui.router', 'ngMaterial', 'ngMessages', 'ngAnimate', 'ng
                 controller: 'StddetailsCTRL',
                 templateUrl: 'views/stats/mainstats.stddetails.html'
             })
-
+            .state('main.mainstats.stdplan', {
+                url: '/StudentPlan',
+                controller: 'StdplanCTRL',
+                templateUrl: 'views/stats/mainstats.stdplan.html'
+            })
+            .state('main.mainstats.studentapply', {
+                url: '/Studentapply/{id}',
+                controller: 'StdApplyCTRL',
+                templateUrl: 'views/stats/stdbudget/studentapply.html'
+            })
+            .state('main.mainstats.student', {
+                url: '/Student/{id}',
+                controller: 'StdCTRL',
+                templateUrl: 'views/stats/stdbudget/student.html'
+            })
+            .state('main.mainstats.studentdebtregis', {
+                url: '/StudentDebtRegis/{id}',
+                controller: 'StdDebtRegisCTRL',
+                templateUrl: 'views/stats/stdbudget/studentdebtregis.html'
+            })
+            .state('main.mainstats.Staffline', {
+                url: '/StaffSupportandAcadamic/{id}',
+                controller: 'StaffLineCTRL',
+                templateUrl: 'views/stats/staff/Staffline.html'
+            })
 
             .state('logout', {
                 url: '/logout',
@@ -108,23 +96,6 @@ angular.module('app', ['ui.router', 'ngMaterial', 'ngMessages', 'ngAnimate', 'ng
             })
 
         $urlRouterProvider.otherwise('/login');
-
-        $mdDateLocaleProvider.months = ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'];
-        $mdDateLocaleProvider.shortMonths = ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'];
-        $mdDateLocaleProvider.days = ['อาทิตย์', 'จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์', 'เสาร์'];
-        $mdDateLocaleProvider.shortDays = ['อา', 'จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส'];
-        $mdDateLocaleProvider.monthHeaderFormatter = function (date) {
-            return $mdDateLocaleProvider.shortMonths[date.getMonth()] + ' ' + (date.getFullYear() + 543);
-        };
-        $mdDateLocaleProvider.formatDate = function (date) {
-            return `${moment(date).format('DD/MM')}/${moment(date).get('year') + 543}`;
-        };
-        $mdDateLocaleProvider.parseDate = function (dateString) {
-            var dateArray = dateString.split("/");
-            dateString = dateArray[1] + "/" + dateArray[0] + "/" + (dateArray[2] - 543);
-            var m = moment(dateString, 'L', true);
-            return m.isValid() ? m.toDate() : new Date(NaN);
-        };
 
     })
 

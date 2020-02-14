@@ -6,13 +6,13 @@ angular.module('app')
 
         $scope.getstartworksupportandacadamic = function () {
             $http({
-                url: 'http://app.rmutp.ac.th/api/bi/hrm/startworksupportandacadamic',
+                url: 'https://app.rmutp.ac.th/api/bi/hrm/startworksupportandacadamic',
                 method: 'GET',
             }).then(
                 function (res) {
                     $scope.datachartsEmpedu = res.data;
                     $scope.deptname = res.data.map(res => res.pos_linename);
-                    $scope.totals = res.data.map(res => res.total_start);
+                    $scope.totals = res.data.map(res => res.people);
                     $scope.chartstartworksupportandacadamic();
                 },
                 function (error) {
@@ -23,7 +23,7 @@ angular.module('app')
 
         $scope.getstaffleave = function () {
             $http({
-                url: 'http://app.rmutp.ac.th/api/bi/hrm/staffleave',
+                url: 'https://app.rmutp.ac.th/api/bi/hrm/staffleave',
                 method: 'GET',
             }).then(
                 function (res) {
@@ -40,7 +40,7 @@ angular.module('app')
 
         $scope.getstartworkdistyearfaculty = function () {
             $http({
-                url: 'http://app.rmutp.ac.th/api/bi/hrm/startworkdistyearfaculty',
+                url: 'https://app.rmutp.ac.th/api/bi/hrm/startworkdistyearfaculty',
                 method: 'GET',
             }).then(
                 function (res) {
@@ -57,7 +57,7 @@ angular.module('app')
 
         $scope.getstartworkdistyearinstitute = function () {
             $http({
-                url: 'http://app.rmutp.ac.th/api/bi/hrm/startworkdistyearinstitute',
+                url: 'https://app.rmutp.ac.th/api/bi/hrm/startworkdistyearinstitute',
                 method: 'GET',
             }).then(
                 function (res) {
@@ -74,7 +74,7 @@ angular.module('app')
 
         $scope.getstartworkdistyeardivision = function () {
             $http({
-                url: 'http://app.rmutp.ac.th/api/bi/hrm/startworkdistyeardivision',
+                url: 'https://app.rmutp.ac.th/api/bi/hrm/startworkdistyeardivision',
                 method: 'GET',
             }).then(
                 function (res) {
@@ -91,7 +91,7 @@ angular.module('app')
 
         $scope.getretiredistposition = function () {
             $http({
-                url: 'http://app.rmutp.ac.th/api/bi/hrm/retiredistposition',
+                url: 'https://app.rmutp.ac.th/api/bi/hrm/retiredistposition',
                 method: 'GET',
             }).then(
                 function (res) {
@@ -108,7 +108,7 @@ angular.module('app')
 
         $scope.getretiredistline = function () {
             $http({
-                url: 'http://app.rmutp.ac.th/api/bi/hrm/retiredistline',
+                url: 'https://app.rmutp.ac.th/api/bi/hrm/retiredistline',
                 method: 'GET',
             }).then(
                 function (res) {

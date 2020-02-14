@@ -1,8 +1,20 @@
-<md-nav-bar md-selected-nav-item="currentNav" nav-bar-aria-label="navigation links">
+<md-nav-bar md-selected-nav-item="currentNav" nav-bar-aria-label="navigation links" hide show-gt-sm>
     <md-nav-item ng-repeat="m in menu" md-nav-sref="{{m.state}}" name="{{m.name}}">
         {{m.label}}
     </md-nav-item>
-
 </md-nav-bar>
+
+<md-menu hide-gt-sm>
+    <md-button class="md-raised md-primary" ng-click="$mdMenu.open()">
+        <span>เมนู</span>
+    </md-button>
+    <md-menu-content width="4" ng-mouseleave="$mdMenu.close()">
+        <md-menu-item ng-repeat="mo in mobilemenu">
+            <md-button ui-sref="{{mo.state}}" ui-sref-active="active" mat-fab color="warn">
+                {{mo.label}}
+            </md-button>
+        </md-menu-item>
+    </md-menu-content>
+</md-menu>
 
 <div ui-view class="nga-fade"></div>

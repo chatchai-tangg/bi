@@ -16,23 +16,23 @@ angular.module('app')
         $scope.hasError=false;
 
         $http({
-            url: Setting.baseApi+'/LoginAuthEdoc',
-            headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'},
+            //url https://app.rmutp.ac.th/api/edoc/login
+            url: Setting.baseApi+'/edoc/login',
             method: 'POST',
-            params: user,
+            data: user,
         })
         .then(
             function(res){
                 $scope.isLoading=false;
                 console.log(res.data);
-                if( res.data.status=='OK' ){
+                if( res.data.status=='ok' ){
                     $scope.hasError=false;
-                    UserService.info = res.data;
+                    UserService.info = res.data.userinfo;
                     UserService.save();
                     $state.go(Setting.afterLoginState);
                 }else{
                     $scope.hasError=true;
-                    $scope.errorMsg=res.data.status;
+                    $scope.errorMsg=res.data.message;
                 }
             },
             function(error){

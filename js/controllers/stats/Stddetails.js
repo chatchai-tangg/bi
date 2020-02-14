@@ -13,7 +13,7 @@ angular.module('app')
         //GETDATA
         $scope.getacademicEmployeeEducation = function () {
             $http({
-                url: 'http://app.rmutp.ac.th/api/bi/std/stdapplydistyear',
+                url: 'https://app.rmutp.ac.th/api/bi/std/stdapplydistyear',
                 method: 'GET',
             }).then(
                 function (res) {
@@ -30,7 +30,7 @@ angular.module('app')
 
         $scope.getstdnormaldisttypeyear = function () {
             $http({
-                url: 'http://app.rmutp.ac.th/api/bi/std/stdnormaldisttypeyear',
+                url: 'https://app.rmutp.ac.th/api/bi/std/stdnormaldisttypeyear',
                 method: 'GET',
             }).then(
                 function (res) {
@@ -47,7 +47,7 @@ angular.module('app')
 
         $scope.getstdtakeleavedisttypeyear = function () {
             $http({
-                url: 'http://app.rmutp.ac.th/api/bi/std/stdtakeleavedisttypeyear',
+                url: 'https://app.rmutp.ac.th/api/bi/std/stdtakeleavedisttypeyear',
                 method: 'GET',
             }).then(
                 function (res) {
@@ -64,7 +64,7 @@ angular.module('app')
 
         $scope.getstdresigndisttypeyear = function () {
             $http({
-                url: 'http://app.rmutp.ac.th/api/bi/std/stdresigndisttypeyear',
+                url: 'https://app.rmutp.ac.th/api/bi/std/stdresigndisttypeyear',
                 method: 'GET',
             }).then(
                 function (res) {
@@ -81,7 +81,7 @@ angular.module('app')
 
         $scope.getstddislodgedisttypeyear = function () {
             $http({
-                url: 'http://app.rmutp.ac.th/api/bi/std/stddislodgedisttypeyear',
+                url: 'https://app.rmutp.ac.th/api/bi/std/stddislodgedisttypeyear',
                 method: 'GET',
             }).then(
                 function (res) {
@@ -98,7 +98,7 @@ angular.module('app')
 
         $scope.getadviserdistyearterm1 = function () {
             $http({
-                url: 'http://app.rmutp.ac.th/api/bi/std/adviserdistyearterm1',
+                url: 'https://app.rmutp.ac.th/api/bi/std/adviserdistyearterm1',
                 method: 'GET',
             }).then(
                 function (res) {
@@ -115,7 +115,7 @@ angular.module('app')
 
         $scope.getadviserdistyearterm2 = function () {
             $http({
-                url: 'http://app.rmutp.ac.th/api/bi/std/adviserdistyearterm2',
+                url: 'https://app.rmutp.ac.th/api/bi/std/adviserdistyearterm2',
                 method: 'GET',
             }).then(
                 function (res) {
@@ -132,7 +132,7 @@ angular.module('app')
 
         $scope.getadviserdistyearterm3 = function () {
             $http({
-                url: 'http://app.rmutp.ac.th/api/bi/std/adviserdistyearterm3',
+                url: 'https://app.rmutp.ac.th/api/bi/std/adviserdistyearterm3',
                 method: 'GET',
             }).then(
                 function (res) {
@@ -149,7 +149,7 @@ angular.module('app')
 
         $scope.getscholardistyear59 = function () {
             $http({
-                url: 'http://app.rmutp.ac.th/api/bi/std/scholardistyear59',
+                url: 'https://app.rmutp.ac.th/api/bi/std/scholardistyear59',
                 method: 'GET',
             }).then(
                 function (res) {
@@ -167,7 +167,7 @@ angular.module('app')
 
         $scope.getscholardistyear60 = function () {
             $http({
-                url: 'http://app.rmutp.ac.th/api/bi/std/scholardistyear60',
+                url: 'https://app.rmutp.ac.th/api/bi/std/scholardistyear60',
                 method: 'GET',
             }).then(
                 function (res) {
@@ -184,7 +184,7 @@ angular.module('app')
 
         $scope.getscholardistyear61 = function () {
             $http({
-                url: 'http://app.rmutp.ac.th/api/bi/std/scholardistyear61',
+                url: 'https://app.rmutp.ac.th/api/bi/std/scholardistyear61',
                 method: 'GET',
             }).then(
                 function (res) {
@@ -201,7 +201,7 @@ angular.module('app')
 
         $scope.getscholardistyear62 = function () {
             $http({
-                url: 'http://app.rmutp.ac.th/api/bi/std/scholardistyear62',
+                url: 'https://app.rmutp.ac.th/api/bi/std/scholardistyear62',
                 method: 'GET',
             }).then(
                 function (res) {
@@ -218,7 +218,7 @@ angular.module('app')
 
         $scope.getdebtstddislodgedistyear = function () {
             $http({
-                url: 'http://app.rmutp.ac.th/api/bi/std/debtstddislodgedistyear',
+                url: 'https://app.rmutp.ac.th/api/bi/std/debtstddislodgedistyear',
                 method: 'GET',
             }).then(
                 function (res) {
@@ -236,7 +236,7 @@ angular.module('app')
 
         $scope.getdebtstdresigndistyear = function () {
             $http({
-                url: 'http://app.rmutp.ac.th/api/bi/std/debtstdresigndistyear',
+                url: 'https://app.rmutp.ac.th/api/bi/std/debtstdresigndistyear',
                 method: 'GET',
             }).then(
                 function (res) {
@@ -254,7 +254,7 @@ angular.module('app')
 
         $scope.getdebtstdnormaldistyear = function () {
             $http({
-                url: 'http://app.rmutp.ac.th/api/bi/std/debtstdnormaldistyear',
+                url: 'https://app.rmutp.ac.th/api/bi/std/debtstdnormaldistyear',
                 method: 'GET',
             }).then(
                 function (res) {
@@ -272,7 +272,7 @@ angular.module('app')
 
         $scope.getcoursesdistsciencesocial = function () {
             $http({
-                url: 'http://app.rmutp.ac.th/api/bi/std/coursesdistsciencesocial',
+                url: 'https://app.rmutp.ac.th/api/bi/std/coursesdistsciencesocial',
                 method: 'GET',
             }).then(
                 function (res) {
@@ -290,7 +290,7 @@ angular.module('app')
 
         $scope.getdeptscholardisttype = function () {
             $http({
-                url: 'http://app.rmutp.ac.th/api/bi/std/deptscholardisttype',
+                url: 'https://app.rmutp.ac.th/api/bi/std/deptscholardisttype',
                 method: 'GET',
             }).then(
                 function (res) {
@@ -309,7 +309,7 @@ angular.module('app')
 
         $scope.getdeptscholarrmutpdisttype59 = function () {
             $http({
-                url: 'http://app.rmutp.ac.th/api/bi/std/deptscholarrmutpdisttype59',
+                url: 'https://app.rmutp.ac.th/api/bi/std/deptscholarrmutpdisttype59',
                 method: 'GET',
             }).then(
                 function (res) {
@@ -331,7 +331,7 @@ angular.module('app')
 
         $scope.getdeptscholarrmutpdisttype60 = function () {
             $http({
-                url: 'http://app.rmutp.ac.th/api/bi/std/deptscholarrmutpdisttype60',
+                url: 'https://app.rmutp.ac.th/api/bi/std/deptscholarrmutpdisttype60',
                 method: 'GET',
             }).then(
                 function (res) {
@@ -352,7 +352,7 @@ angular.module('app')
 
         $scope.getdeptscholarrmutpdisttype61 = function () {
             $http({
-                url: 'http://app.rmutp.ac.th/api/bi/std/deptscholarrmutpdisttype61',
+                url: 'https://app.rmutp.ac.th/api/bi/std/deptscholarrmutpdisttype61',
                 method: 'GET',
             }).then(
                 function (res) {
@@ -371,7 +371,7 @@ angular.module('app')
 
         $scope.getdeptscholarrmutpdisttype62 = function () {
             $http({
-                url: 'http://app.rmutp.ac.th/api/bi/std/deptscholarrmutpdisttype62',
+                url: 'https://app.rmutp.ac.th/api/bi/std/deptscholarrmutpdisttype62',
                 method: 'GET',
             }).then(
                 function (res) {
@@ -390,7 +390,7 @@ angular.module('app')
 
         $scope.getdeptscholaretcdisttype = function () {
             $http({
-                url: 'http://app.rmutp.ac.th/api/bi/std/deptscholaretcdisttype',
+                url: 'https://app.rmutp.ac.th/api/bi/std/deptscholaretcdisttype',
                 method: 'GET',
             }).then(
                 function (res) {
@@ -409,7 +409,7 @@ angular.module('app')
 
         $scope.getstudentdistyear1 = function () {
             $http({
-                url: 'http://app.rmutp.ac.th/api/bi/std/studentdistyear',
+                url: 'https://app.rmutp.ac.th/api/bi/std/studentdistyear',
                 method: 'GET',
             }).then(
                 function (res) {
@@ -427,7 +427,7 @@ angular.module('app')
 
         $scope.getstudentdistyear2 = function () {
             $http({
-                url: 'http://app.rmutp.ac.th/api/bi/std/studentdistyear2',
+                url: 'https://app.rmutp.ac.th/api/bi/std/studentdistyear2',
                 method: 'GET',
             }).then(
                 function (res) {
@@ -445,7 +445,7 @@ angular.module('app')
 
         $scope.getstudentdistyear3 = function () {
             $http({
-                url: 'http://app.rmutp.ac.th/api/bi/std/studentdistyear3',
+                url: 'https://app.rmutp.ac.th/api/bi/std/studentdistyear3',
                 method: 'GET',
             }).then(
                 function (res) {
@@ -567,9 +567,9 @@ angular.module('app')
                                 return commaify(value);
                                 // return '$' + commaify(value);
                             },
-                            anchor: 'end',
+                            anchor: 'center',
                             color: 'black',
-                            align: 'start',
+                            align: 'end',
                             labels: {
                                 title: {
                                     font: {

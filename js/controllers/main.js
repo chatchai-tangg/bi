@@ -1,42 +1,31 @@
 angular.module('app')
 
-    .controller('MainCtrl', function ($scope, UserService, $state, $mdSidenav) {
+.controller('MainCtrl', function( $scope, UserService, $state, $mdSidenav ){
 
-        if (!UserService.isLoggedIn()) {
-            $state.go('login');
-        }
+    if( !UserService.isLoggedIn() ){
+        $state.go('login');
+    }
 
-        $scope.user = UserService.info;
+    $scope.user = UserService.info;
 
-        $scope.toggleSidenav = function () {
-            $mdSidenav('sidenav-left').toggle();
-        }
+    $scope.toggleSidenav = function() {
+        $mdSidenav('sidenav-left').toggle();
+    }
 
-        $scope.menu = [{
-                name: 'สารบรรณ',
-                ref: 'main.edoc',
-                icon: 'insert_drive_file'
-            },
-            {
-                name: 'ประชุม',
-                ref: 'main.emeeting',
-                icon: 'people'
-            },
-            {
-                name: 'แดชบอร์ด',
-                ref: 'main.mainstats',
-                icon: 'insert_chart_outlined'
-            },
-        ];
+    $scope.menu=[
+        {name: 'สถิติ', ref:'main.mainstats', icon:'pie_chart'},
+        {name: 'สารบรรณ', ref:'main.edoc', icon:'insert_drive_file'},
+        {name: 'ประชุม', ref:'main.emeeting', icon:'people'},
+    ];
 
-        $scope.closeSidenav = function (title) {
-            $mdSidenav('sidenav-left').close();
-        };
+    $scope.closeSidenav = function(title){
+        $mdSidenav('sidenav-left').close();
+    };
 
-        $scope.userMenu = function ($mdMenu, ev) {
-            originatorEv = ev;
-            $mdMenu.open(ev);
-        };
+    $scope.userMenu = function($mdMenu, ev) {
+        originatorEv = ev;
+        $mdMenu.open(ev);
+    };
 
 
-    })
+})
