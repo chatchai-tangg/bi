@@ -1,0 +1,94 @@
+<div layout="row" class="layout-control" style="height:100vh;">
+
+    <md-sidenav md-theme="sidenav" md-colors="{background: 'sidenav-primary'}" class="md-sidenav-left" md-component-id="sidenav-left" md-is-locked-open="$mdMedia('gt-sm') && sidenavLocked" md-whiteframe="4" layout="column">
+        <header class="nav-header">
+            <a ui-sref="main.edoc">
+                <img src="img/edoc-w-400.png" alt="Edoc Logo">
+            </a>
+            <small>{{version}}</small>
+            <md-button ng-if="$mdMedia('gt-sm') && sidenavLocked" ng-click="toggleSidenavLocked()" class="md-icon-button top-right-pos">
+                <md-icon md-font-icon="material-icons">chevron_left</md-icon>
+            </md-button>
+        </header>
+        <md-content flex md-colors="{background: 'sidenav-primary'}">
+            <md-list flex style="padding-top:0;">
+                <md-divider></md-divider>
+                <md-list-item ng-repeat="m in menu" ui-sref="{{m.ref}}" ng-click="closeSidenav()" ui-sref-active="active">
+                    <md-icon md-font-icon="material-icons">{{m.icon}}</md-icon>
+                    <p>{{m.name}}</p>
+                </md-list-item>
+            </md-list>
+        </md-content>
+    </md-sidenav>
+
+    <div layout="column" flex>
+
+        <md-toolbar md-theme="toolbar" class="md-whiteframe-1dp">
+            <div class="md-toolbar-tools">
+                <md-button ng-if="!$mdMedia('gt-sm')" ng-click="toggleSidenav()" class="md-icon-button">
+                    <md-icon md-font-icon="material-icons">menu</md-icon>
+                </md-button>
+                <md-button ng-if="!sidenavLocked" ng-click="toggleSidenavLocked()" class="md-icon-button">
+                    <md-icon md-font-icon="material-icons">menu</md-icon>
+                </md-button>
+                <h2 flex md-truncate>{{ pageTitle }}</h2>
+                <md-menu>
+                    <md-button class="md-icon-button" ng-click="userMenu($mdMenu, $event)">
+                        <md-icon md-font-icon="material-icons">account_circle</md-icon>
+                    </md-button>
+                    <md-menu-content width="4">
+                        <md-menu-item>
+                            <md-button>
+                                <md-icon md-font-icon="material-icons" md-menu-align-target>account_circle</md-icon>
+                                {{user.Username}}
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <md-button ui-sref="logout">
+                                <md-icon md-font-icon="material-icons" md-menu-align-target>exit_to_app</md-icon>
+                                ออกจากระบบ
+                            </md-button>
+                        </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
+            </div>
+        </md-toolbar>
+
+        <md-progress-linear ng-show="isLoading" id="main-loading" md-mode="indeterminate"></md-progress-linear>
+
+        <md-content ui-view class="nga-fade"></md-content>
+
+    </div>
+
+    <md-sidenav md-component-id="sidenav-right" class="md-sidenav-right">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h1 flex md-truncate>{{rightSideNav.title}}</h1>
+                <md-button ng-click="closeRightSideNav()" class="md-icon-button">
+                    <md-icon>chevron_right</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-content>
+            <md-subheader>
+                <md-input-container md-no-float class="md-block md-input-container-no-error">
+                    <md-icon>search</md-icon>
+                    <input ng-model="rightNavSearch" type="text" placeholder="ค้นหา">
+                    <md-icon ng-show="rightNavSearch" ng-click="rightNavSearch=''" style="cursor:pointer;outline:none;font-size:16px;">clear</md-icon>
+                </md-input-container>
+            </md-subheader>
+            <div style="margin-top:0;" ng-repeat="s in rightSideNav.sections">
+                <div ng-click="s.toggle=!s.toggle" md-ink-ripple layout="row" layout-align="center center" class="md-accordian-button">
+                    <div flex md-truncate>{{s.title}}</div>
+                    <md-icon class="md-toggle-icon" ng-class="{'toggled': s.toggle}">expand_more</md-icon>
+                </div>
+                <md-list ng-class="{'toggled': s.toggle}" ng-style="{'max-height': (s.menu.length*48)+'px'}" class="md-sub-list">
+                    <md-list-item ng-repeat="m in s.menu | filter:rightNavSearch"" ui-sref="{{m.state}}" ui-sref-active="active" md-ink-ripple>
+                        <p md-truncate>{{m.name}}</p>
+                    </md-list-item>
+                </md-list>
+            </div>
+        </md-content>
+    </md-sidenav>
+
+</div>

@@ -1,0 +1,112 @@
+/* ng-animate fade */
+.nga-fade.ng-enter{
+    transition: 0.5s linear all;
+    opacity: 0;
+}
+.nga-fade.ng-enter.ng-enter-active{
+    opacity: 1;
+}
+.nga-fade.ng-hide {
+  opacity: 0;
+}
+.nga-fade.ng-hide-add,
+.nga-fade.ng-hide-remove {
+  transition: 0.3s linear all;
+}
+
+.login-bg{
+    background: url(../img/bg1.jpg) no-repeat bottom center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+.login-logo{
+    max-width: 200px;
+    display: block;
+    margin: 10px auto;
+}
+
+.md-sidenav-left .nav-header img{
+    width: 150px;
+    margin: 20px auto 0;
+    display: block;
+}
+.md-sidenav-left .nav-header small{
+    display: block;
+    text-align: center;
+    margin-bottom: 10px;
+    color: rgba(255,255,255,.5);
+}
+.md-sidenav-left .top-right-pos{
+    position: absolute;
+    top: 12px;
+    right: 0;
+}
+md-list-item.active{
+    background-color: rgba(0,0,0,.2);
+}
+.md-toggle-icon {
+    display: block;
+    margin-left: auto;
+    speak: none;
+    vertical-align: middle;
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+    transition: -webkit-transform 0.3s ease-in-out;
+    transition: transform 0.3s ease-in-out;
+    transition: transform 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
+}
+.md-toggle-icon.toggled {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+}
+.md-accordian-button{
+    outline: none;
+    position: relative;
+    padding: 0 16px;
+    min-height: 48px;
+    cursor: pointer;
+}
+.md-sub-list{
+    transition: max-height 0.3s ease-in;
+    overflow: hidden;
+    padding: 0;
+}
+.md-sub-list.toggled{
+    max-height: 0!important;
+    transition: max-height 0.3s ease-out;
+}
+.md-sub-list .md-button{
+    padding-left: 32px!important;
+}
+.md-input-container-no-error{
+    margin: 0;
+}
+.md-input-container-no-error .md-errors-spacer{
+    display: none;
+}
+.alert{
+    background: rgb(255, 119, 109)!important;
+    color: rgb(255, 255, 255)!important;
+}
+
+fieldset{
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+.icon-inline{
+    vertical-align: top;
+}
+*{
+    font-family: 'Sarabun', sans-serif;
+}
+h1,h2,h3,h4,h5,h6{
+    font-family: 'Kanit', sans-serif;
+}
+
+#main-loading{
+    margin-bottom: -5px!important;
+    z-index: 2;
+}
